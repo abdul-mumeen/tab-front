@@ -1,0 +1,49 @@
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="row pb-3">
+            <div class="col-6 offset-3 d-flex justify-content-center">
+                <h2>Create New Table</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-8 offset-2">
+                <mat-form-field [style.width]="'100%'">
+                    <input matInput placeholder="Table Name" [value]="this.tableName" (input)="tableName = $event.target.value" type="text">
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div *ngFor="let field of fields; let i = index" [attr.data-index]="i">
+            <div class="row">
+                <div class="col-4 offset-2">
+                    <mat-form-field>
+                        <input matInput placeholder="Column Name" (input)="field.name = $event.target.value" type="text">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-4 d-flex align-items-center">
+                    <mat-select placeholder="Data Type" [(value)]="field.type">
+                        <mat-option *ngFor="let type of dataTypes" [value]="type">{{type}}</mat-option>
+                    </mat-select>
+
+                </div>
+
+                <div class="col-2 d-flex justify-content-end align-items-center">
+                    <button mat-icon-button color="warn" (click)="removeField(i)"><mat-icon>close</mat-icon></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row d-flex justify-content-end">
+            <button mat-raised-button color="accent" (click)="addField()">Add Field</button>
+        </div>
+
+        <div class="row d-flex justify-content-end mt-3">
+            <button mat-raised-button color="primary" (click)="submit()">Submit</button>
+        </div>
+    </div>
+</div>
+
+
+<button mat-raised-button (click)="refresh()">Refresh?</button>
