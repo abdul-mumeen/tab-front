@@ -1,83 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-/***************
- *
- * Side Bar Area
- *
- ***************/
-
-#sidebar {
-    min-width: 225px;
-    background-color: #333;
-    
-    a:hover {
-        text-decoration: none;
-    }
-    
-    a, a:visited {
-        color: #cccccc;
-    }
-    
-    .collapsing {
-        visibility: visible;
-        height: 0;
-        -webkit-transition-property: height, visibility;
-        transition-property: height, visibility;
-        -webkit-transition-timing-function: ease-out;
-        transition-timing-function: ease-out;
-        -webkit-transition-duration: .15s;
-        transition-duration: .15s;
-    }
-    
-    .list-group {
-    }
-    
-    .list-group-item {
-        border-radius: 0;
-        background-color: #333;
-        color: #ccc;
-        border-left: 0;
-        border-right: 0;
-        border-color: #2c2c2c;
-        white-space: nowrap;
-        min-height: 40px;
-    }
-    
-    .list-group-item:hover, .link-text:hover {
-        color: white;
-    }
-    
-    .list-group {
-        
-        .expandable[aria-expanded="false"]:before {
-            content: "\f067";
-            font-family: 'Material Icons';
-            text-align: right;
-            color: white;
-        }
-        
-        .expandable[aria-expanded="true"]:before {
-            content: "\f068";
-            font-family: 'Material Icons';
-            text-align: right;
-            color: white;
-        }
-    }
+button{
+  outline: none;
+}
+.pinkButton {
+  border-radius: 100px;
+  background-color: #FD7F81;
+  color:#FFF;
+  padding: 5px 15px 5px 15px;
+  cursor:pointer;
+  height: 40px;
+  width: 288px;
+  margin-right: 8px;
 }
 
-#sidebar-toggle[aria-expanded="false"]:before {
-    content: "\f18e";
-    font-family: 'Material Icons';
-    text-align: right;
-    color: #ccc;
-    font-size: 22px;
+.buttonIcon{
+  display:inline-block;
+  font-size: 11pt;
+  margin-left:5px;
 }
 
-#sidebar-toggle[aria-expanded="true"]:before {
-    content: "\f190";
-    font-family: 'Material Icons';
-    text-align: right;
-    color: #ccc;
-    font-size: 22px;
+.buttonLabel{
+  height: 18px;
+  color: #FFFFFF;
+  font-family: "Chivo Bold";
+  font-size: 14px;
+  line-height: 18px;
 }

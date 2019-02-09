@@ -1,36 +1,37 @@
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { FormsModule }    from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+import { routes } from './app.route';
+import {MatButtonModule} from '@angular/material/button';
 
-import { TableauModule } from './shared/tableau/tableau.module';
+import { InterceptService, AuthService } from './services/index'
 
 import { AppComponent } from './app.component';
-import { RootModule, rootRoute } from './root/root.module';
 
+import { SharedComponentModule, LoginComponent, SignupComponent } from './shared/index';
 
-const routes: Routes = [
-    {
-        path: '',
-        component: AppComponent,
-        children: [
-            rootRoute,
-        ]
-    }
-];
+import { AuthGuard, AdminGuard } from './guards/index';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent, LoginComponent, SignupComponent
     ],
     imports: [
         BrowserAnimationsModule,
         BrowserModule,
-        RouterModule.forRoot(routes),
-        RootModule,
-        TableauModule,
+        HttpClientModule,
+        MatButtonModule,
+        routes,
+        SharedComponentModule
     ],
-    providers: [],
+    providers: [
+      AuthGuard, AdminGuard, AuthService,
+      { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true },
+      { provide: Window, useValue: window }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

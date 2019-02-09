@@ -1,0 +1,73 @@
+.center30 {
+  margin:30px auto;
+}
+
+.loginBox {
+  height: 339px;
+  width: 393px;
+  border-radius: 7px;
+  background-color: #FFFFFF;
+  box-shadow: 1px 4px 16px 0 rgba(188,188,188,0.5);
+}
+.checkbox {
+  height: 20px;
+  width: 20px;
+  border: 1px solid #DCDCDC;
+  border-radius: 2px;
+  padding: 0;
+  margin:0;
+  vertical-align: bottom;
+  position: relative;
+  top: 2px;
+  overflow: hidden;
+}
+.rememberMe {
+  height: 19px;
+  width: 98px;
+  color: #8F8F8F;
+  font-family: "Open Sans";
+  font-size: 14px;
+  line-height: 19px;
+  padding-left: 15px;
+  text-indent: -15px;
+}
+.forgotPassword {
+  height: 19px;
+  width: 116px;
+  color: #FD7F81;
+  font-family: "Open Sans";
+  font-size: 14px;
+  line-height: 19px;
+  float: right;
+  text-align: right;
+}
+.logoBox {
+  height: 40px;
+  width: 180px;
+  background-repeat: no-repeat;
+  background-image: url("logo.png");
+  background-size: 180px 40px;
+  background-position: center;
+}
+
+input::placeholder {
+  padding: 11px 0px;
+  height: 18px;
+  width: 84px;
+  color: #8F8F8F;
+  font-family: "Open Sans";
+  font-size: 14px;
+  line-height: 18px;
+}
+.form {
+  width: 288px;
+}
+.input {
+  outline: none;
+  padding-left: 26px;
+  height: 40px;
+  width: 262px;
+  border: 1px solid #DCDCDC;
+  border-radius: 100px;
+  margin-bottom: 12px;
+}
