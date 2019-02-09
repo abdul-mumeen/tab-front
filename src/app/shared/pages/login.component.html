@@ -1,0 +1,32 @@
+<div>
+  <div class="center30" style="width:592px">
+    <button routerLink="/login" class="pinkButton" tabindex="3" [disabled]="loading" type="button" name="button">
+      <div class="buttonLabel">
+        Account LogIn
+      </div>
+    </button>
+    <button routerLink="/signup" class="pinkButton" tabindex="3" [disabled]="loading" type="button" name="button">
+      <div class="buttonLabel">
+        Account Signup
+      </div>
+    </button>
+  </div>
+</div>
+<div class="loginBox center30">
+  <div class="center30 logoBox"></div>
+  <div class="form center30">
+    <input class="input" type="text" name="email" placeholder="gabriel.melo@gmail.com">
+    <input class="input"  type="password" name="password" placeholder="********">
+    <button class="pinkButton" tabindex="3" [disabled]="loading" type="button" name="button">
+      <div class="buttonLabel">
+        Login
+      </div>
+    </button>
+    <div style="margin-top:19px;">
+      <label for="remember" class="rememberMe">
+        <input class="checkbox" type="checkbox" name="remember" value="true"> Remember me
+      </label>
+      <a class="forgotPassword" href="#">Forgot password?</a>
+    </div>
+  </div>
+</div>
