@@ -1,27 +1,33 @@
-<div>
-  <div class="center30" style="width:592px">
-    <button routerLink="/login" class="pinkButton" tabindex="3" [disabled]="loading" type="button" name="button">
-      <div class="buttonLabel">
-        Account LogIn
-      </div>
-    </button>
-    <button routerLink="/signup" class="pinkButton" tabindex="3" [disabled]="loading" type="button" name="button">
-      <div class="buttonLabel">
-        Account Signup
-      </div>
-    </button>
-  </div>
-</div>
-<div class="loginBox center30">
-  <div class="center30 logoBox"></div>
-  <div class="form center30">
-    <input class="input" type="text" name="name" placeholder="Gabriel Melo">
-    <input class="input" type="text" name="email" placeholder="gabriel.melo@gmail.com">
-    <input class="input"  type="password" name="password" placeholder="********">
-    <button class="pinkButton" tabindex="3" [disabled]="loading" type="button" name="button">
-      <div class="buttonLabel">
-        Sign up
-      </div>
-    </button>
-  </div>
+<div class="container">
+    <div class="signup-box">
+        <div class="nav-header">
+            <i class="material-icons" (click)="back()">arrow_back_ios</i>
+        </div>
+        <div class="logoBox"></div>
+        <div class="form">
+            <input
+                class="input"
+                type="text"
+                name="name"
+                placeholder="Gabriel Melo"
+            />
+            <input
+                class="input"
+                type="text"
+                name="email"
+                placeholder="gabriel.melo@gmail.com"
+            />
+            <input
+                class="input"
+                type="password"
+                name="password"
+                placeholder="********"
+            />
+            <button class="pinkButton" tabindex="3" type="button" name="button">
+                <div class="buttonLabel">
+                    Sign up
+                </div>
+            </button>
+        </div>
+    </div>
 </div>
