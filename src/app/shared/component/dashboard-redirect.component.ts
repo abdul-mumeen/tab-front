@@ -14,7 +14,7 @@ export class DashboardRedirect implements OnInit {
     ) {}
 
     ngOnInit() {
-        let navTo: string = '/login';
+        let navTo: string = '/landing';
         let role: string = '';
 
         if (this.authService.user && this.authService.user.role) {
@@ -29,7 +29,7 @@ export class DashboardRedirect implements OnInit {
                 navTo = '/user';
                 break;
             default:
-                navTo = '/login';
+                navTo = '/landing';
                 break;
         }
 
