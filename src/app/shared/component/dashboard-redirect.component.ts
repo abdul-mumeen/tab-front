@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthService } from '../../services/index';
 
-//@Component()
 @Component({
     template: '',
 })
