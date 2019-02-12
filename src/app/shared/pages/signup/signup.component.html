@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="signup-box">
+        <div class="nav-header">
+            <i class="material-icons" (click)="back()">arrow_back_ios</i>
+        </div>
+        <div class="logoBox"></div>
+        <form class="form" [formGroup]="signupForm">
+            <input
+                class="input"
+                type="text"
+                name="name"
+                placeholder="Gabriel Melo"
+                formControlName="name"
+                required
+            />
+            <input
+                class="input"
+                type="text"
+                name="email"
+                placeholder="gabriel.melo@gmail.com"
+                formControlName="email"
+                required
+            />
+            <input
+                class="input"
+                type="password"
+                name="password"
+                placeholder="********"
+                formControlName="password"
+                required
+            />
+            <button
+                class="pinkButton"
+                tabindex="3"
+                type="button"
+                name="button"
+                (click)="signup(signupForm.value)"
+            >
+                <div class="buttonLabel">
+                    Sign up
+                </div>
+            </button>
+        </form>
+    </div>
+</div>

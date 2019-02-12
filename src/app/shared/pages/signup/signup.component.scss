@@ -1,0 +1,62 @@
+.center30 {
+    margin: 30px auto;
+}
+
+.signup-box {
+    width: 393px;
+    border-radius: 7px;
+    background-color: #ffffff;
+    box-shadow: 1px 4px 16px 0 rgba(188, 188, 188, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 30px;
+}
+
+.logoBox {
+    height: 40px;
+    width: 180px;
+    background-repeat: no-repeat;
+    background-image: url('../../../../assets/logo.png');
+    background-size: 180px 40px;
+    background-position: center;
+    margin-bottom: 30px;
+}
+
+input::placeholder {
+    padding: 11px 0px;
+    height: 18px;
+    width: 84px;
+    color: #8f8f8f;
+    font-family: 'Open Sans';
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.form {
+    width: 288px;
+}
+
+.input {
+    outline: none;
+    padding-left: 26px;
+    height: 40px;
+    width: 262px;
+    border: 1px solid #dcdcdc;
+    border-radius: 100px;
+    margin-bottom: 12px;
+}
+
+.nav-header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 0 0 20px;
+    margin-bottom: 30px;
+    width: 100%;
+    color: #fd7f81;
+
+    i {
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
