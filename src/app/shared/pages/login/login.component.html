@@ -4,22 +4,36 @@
             <i class="material-icons" (click)="back()">arrow_back_ios</i>
         </div>
         <div class="logoBox"></div>
-        <div class="form">
+        <form class="form" [formGroup]="loginForm">
             <input
                 class="input"
                 type="text"
                 name="email"
+                formControlName="email"
                 placeholder="gabriel.melo@gmail.com"
+                [disabled]="loading"
             />
             <input
                 class="input"
                 type="password"
                 name="password"
+                formControlName="password"
                 placeholder="********"
+                [disabled]="loading"
             />
-            <button class="pinkButton" tabindex="3" type="button" name="button">
-                <div class="buttonLabel">
+            <button
+                class="pinkButton"
+                tabindex="3"
+                type="button"
+                name="button"
+                [disabled]="loading"
+                (click)="login(loginForm.value)"
+            >
+                <div class="buttonLabel" *ngIf="!loading">
                     Login
+                </div>
+                <div class="buttonLabel" *ngIf="loading">
+                    Loading...
                 </div>
             </button>
             <div style="margin-top:19px;">
@@ -34,6 +48,6 @@
                 </label>
                 <a class="forgotPassword" href="#">Forgot password?</a>
             </div>
-        </div>
+        </form>
     </div>
 </div>

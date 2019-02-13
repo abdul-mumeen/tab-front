@@ -80,7 +80,9 @@ export class AuthService {
     public logout() {}
 
     public loginEmailUser(email: string, password: string) {
-        // authenticate then get user info then set it
+        return firebase
+            .auth()
+            .signInAndRetrieveDataWithEmailAndPassword(email, password);
     }
 
     public updateUser(meChanges: any) {}
