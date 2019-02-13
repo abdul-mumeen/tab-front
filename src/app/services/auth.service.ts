@@ -22,13 +22,11 @@ export class AuthService {
         this.LoggedIn = new BehaviorSubject(null); // maintian LoggedIn info
 
         this.afAuth.user.subscribe(user => {
-            console.log(user, 'user');
+            this.user = user;
         });
     }
 
     registerEmailUser(email: string, password: string) {
-        console.log(email, 'user', password);
-
         return firebase.auth().createUserWithEmailAndPassword(email, password);
     }
 
