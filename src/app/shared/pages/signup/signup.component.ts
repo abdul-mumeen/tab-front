@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { FormGroup, FormControl, FormBuilder, Validator } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     templateUrl: 'signup.component.html',
@@ -9,8 +10,13 @@ import { FormGroup, FormControl, FormBuilder, Validator } from '@angular/forms';
 })
 export class SignupComponent implements OnInit, OnDestroy {
     signupForm: any;
+    loading: boolean = false;
 
-    constructor(private loc: Location, private authService: AuthService) {
+    constructor(
+        private loc: Location,
+        private authService: AuthService,
+        private router: Router,
+    ) {
         this.signupForm = new FormGroup({
             name: new FormControl(),
             email: new FormControl(),
@@ -24,11 +30,17 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.loc.back();
     }
 
-    signup(signupForm: any) {
-        console.log(signupForm, 'details');
-        this.authService.registerEmailUser(
-            signupForm.email,
-            signupForm.password,
-        );
+    async signup(signupForm: any) {
+        this.loading = true;
+        try {
+            await this.authService.registerEmailUser(
+                signupForm.email,
+                signupForm.password,
+            );
+            this.router.navigate(['/dashboard-placeholder']);
+        } catch (error) {
+        } finally {
+            this.loading = false;
+        }
     }
 }

@@ -11,6 +11,7 @@
                 name="name"
                 placeholder="Gabriel Melo"
                 formControlName="name"
+                [disabled]="loading"
                 required
             />
             <input
@@ -19,6 +20,7 @@
                 name="email"
                 placeholder="gabriel.melo@gmail.com"
                 formControlName="email"
+                [disabled]="loading"
                 required
             />
             <input
@@ -27,6 +29,7 @@
                 name="password"
                 placeholder="********"
                 formControlName="password"
+                [disabled]="loading"
                 required
             />
             <button
@@ -35,9 +38,13 @@
                 type="button"
                 name="button"
                 (click)="signup(signupForm.value)"
+                [disabled]="loading"
             >
-                <div class="buttonLabel">
+                <div *ngIf="!loading" class="buttonLabel">
                     Sign up
+                </div>
+                <div *ngIf="loading" class="buttonLabel">
+                    Loading...
                 </div>
             </button>
         </form>

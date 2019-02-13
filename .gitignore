@@ -16,3 +16,5 @@ db-data/
 dist/
 tmp
 out-tsc
+
+*.DS_Store
