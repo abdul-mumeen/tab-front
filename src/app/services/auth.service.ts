@@ -77,7 +77,9 @@ export class AuthService {
         // remove user from local storage to log me out
     }
 
-    public logout() {}
+    public logout() {
+        return this.afAuth.auth.signOut();
+    }
 
     public loginEmailUser(email: string, password: string) {
         return firebase

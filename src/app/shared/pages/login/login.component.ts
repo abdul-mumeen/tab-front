@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     async login(loginForm: any) {
-        console.log(loginForm, 'login form');
         this.loading = true;
         try {
             await this.authService.loginEmailUser(
