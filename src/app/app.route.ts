@@ -16,7 +16,7 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard],
     },
     { path: 'landing', component: LandingComponent },
-    { path: 'dashboard-placeholder', component: DashboardComponent },
+    { path: 'user', component: DashboardComponent },
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
     { path: 'signup', component: SignupComponent },

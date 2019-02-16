@@ -34,10 +34,11 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.loading = true;
         try {
             await this.authService.registerEmailUser(
+                signupForm.name,
                 signupForm.email,
                 signupForm.password,
             );
-            this.router.navigate(['/dashboard-placeholder']);
+            this.router.navigate(['/dashboard']);
         } catch (error) {
         } finally {
             this.loading = false;
