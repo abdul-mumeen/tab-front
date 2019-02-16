@@ -6,7 +6,8 @@ import {
     LogoutComponent,
     SignupComponent,
     DashboardRedirect,
-    DashboardComponent,
+    AdminComponent,
+    UserComponent,
 } from './shared/index';
 
 const appRoutes: Routes = [
@@ -16,7 +17,8 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard],
     },
     { path: 'landing', component: LandingComponent },
-    { path: 'user', component: DashboardComponent },
+    { path: 'user', component: UserComponent },
+    { path: 'admin', component: AdminComponent },
     { path: 'login', component: LoginComponent },
     { path: 'logout', component: LogoutComponent },
     { path: 'signup', component: SignupComponent },

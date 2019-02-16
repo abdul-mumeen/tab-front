@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
-    templateUrl: 'dashboard.component.html',
-    styleUrls: ['dashboard.component.scss'],
+    templateUrl: 'user.component.html',
+    styleUrls: ['user.component.scss'],
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class UserComponent implements OnInit, OnDestroy {
     loading: boolean = false;
     constructor(
         private loc: Location,
