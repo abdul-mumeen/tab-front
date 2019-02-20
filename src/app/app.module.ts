@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { InterceptService, AuthService } from './services/index';
 
@@ -48,6 +49,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         AngularFirestoreModule,
         FormsModule,
         ReactiveFormsModule,
+        MatExpansionModule,
     ],
     providers: [
         AuthGuard,
