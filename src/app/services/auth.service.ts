@@ -7,12 +7,13 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, exhaustMap, flatMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { UserModel } from '../../models/models';
 
 @Injectable()
 export class AuthService {
     public apiUrl: string = environment.apiRoot;
 
-    public user: any;
+    public user: UserModel;
     public LoggedIn: any;
     private token: string;
 
@@ -86,9 +87,10 @@ export class AuthService {
         return headers;
     }
 
-    public checkUser() {
+    public checkUser(): Observable<UserModel> {
         // this is used in _guards to check if we have already got user info in session, if not it will load from firebase
-        return of({ role: '' });
+        console.log(this.user, 'user auth');
+        return of(this.user);
     }
 
     public resetUser() {
