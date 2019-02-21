@@ -21,7 +21,8 @@ import {
     LandingComponent,
     LoginComponent,
     SignupComponent,
-    DashboardComponent,
+    AdminComponent,
+    UserComponent,
 } from './shared/index';
 
 import { AuthGuard, AdminGuard } from './guards/index';
@@ -32,7 +33,8 @@ import { AuthGuard, AdminGuard } from './guards/index';
         LandingComponent,
         LoginComponent,
         SignupComponent,
-        DashboardComponent,
+        AdminComponent,
+        UserComponent,
     ],
     imports: [
         BrowserAnimationsModule,

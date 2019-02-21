@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 loginForm.email,
                 loginForm.password,
             );
-            this.router.navigate(['/dashboard-placeholder']);
+            this.router.navigate(['/dashboard']);
         } catch {
         } finally {
             this.loading = false;

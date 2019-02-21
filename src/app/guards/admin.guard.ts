@@ -20,6 +20,7 @@ export class AdminGuard implements CanActivate {
                 let role: string = '';
                 if (result) {
                     role = result.role;
+                    console.log(role, 'role >>>>>>>>>');
                 }
                 if (role === 'admin') {
                     return true;
@@ -27,7 +28,7 @@ export class AdminGuard implements CanActivate {
                     if (role !== '') {
                         // they have a different role so redirect them back to root so they
                         // don't end up in a loop going to login over and over
-                        this.router.navigate(['/']);
+                        this.router.navigate(['/user']);
                     } else {
                         this.router.navigate(['/landing'], {
                             queryParams: { returnUrl: state.url },
