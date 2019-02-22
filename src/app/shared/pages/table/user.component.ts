@@ -18,7 +18,7 @@ export class UserComponent implements OnInit, OnDestroy {
     ngOnInit() {}
     ngOnDestroy() {}
 
-    async goHome() {
+    async logout() {
         this.loading = true;
         try {
             await this.authService.logout();
