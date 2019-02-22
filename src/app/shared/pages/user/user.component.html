@@ -2,7 +2,10 @@
     <div class="signup-box">
         <div class="content">
             <mat-form-field>
-                <mat-select placeholder="Favorite food">
+                <mat-select
+                    [placeholder]="selectPlaceholder"
+                    [disabled]="disableSelect"
+                >
                     <mat-option
                         *ngFor="let table of tables"
                         [value]="table.value"
