@@ -24,7 +24,7 @@ export class AuthService {
         private afAuth: AngularFireAuth,
         private afDb: AngularFirestore,
     ) {
-        this.token = this.getToken();
+        // this.token = this.getToken();
         this.LoggedIn = new BehaviorSubject(null); // maintian LoggedIn info
 
         this.afAuth.user.subscribe(user => {
@@ -139,14 +139,14 @@ export class AuthService {
         sessionStorage.setItem('user', JSON.stringify(user));
     }
 
-    private getToken() {
-        return localStorage.getItem('token') || null;
-    }
+    // private getToken() {
+    //     return localStorage.getItem('token') || null;
+    // }
 
-    private storeToken(newToken: string) {
-        this.token = newToken;
-        localStorage.setItem('token', newToken);
-    }
+    // private storeToken(newToken: string) {
+    //     this.token = newToken;
+    //     localStorage.setItem('token', newToken);
+    // }
 
     setDoc(docPath, data = {}, options = {}): Promise<void> {
         return this.afDb.doc(docPath).set(data, options);
