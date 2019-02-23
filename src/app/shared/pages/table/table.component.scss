@@ -54,12 +54,12 @@
     color: #dcdcdc;
     text-align: left;
     border: 1px solid #dcdcdc !important;
+    padding-left: 10px;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #fff;
     min-width: 220px;
     z-index: 1;
 
@@ -83,7 +83,7 @@
     display: block;
     top: -40px;
     position: relative;
-    background-color: inherit;
+    background-color: #fff;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 

@@ -46,4 +46,8 @@ export class DBService {
             },
         ];
     }
+
+    async getTableMetaData(tableName: string) {
+        return true;
+    }
 }

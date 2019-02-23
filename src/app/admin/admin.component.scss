@@ -1,9 +1,9 @@
-.center30 { 
+.center30 {
     margin: 30px auto;
 }
 
-button{
-  margin-bottom: 12px;
+button {
+    margin-bottom: 12px;
 }
 
 .logoBox {
@@ -16,53 +16,64 @@ button{
     margin-bottom: 30px;
 }
 
-.pngIcon{
-  width: 20px;
-  height: 20px;
-  margin: 0 12px;
+.pngIcon {
+    width: 20px;
+    height: 20px;
+    margin: 0 12px;
 }
 
-.buttonLabel{
-  height: 18px;
-  font-family: "Open Sans";
-  color: #8F8F8F;
-  font-size: 14px;
-  line-height: 18px;
-  vertical-align: super;
+.buttonLabel {
+    height: 18px;
+    font-family: 'Open Sans';
+    color: #8f8f8f;
+    font-size: 14px;
+    line-height: 18px;
+    vertical-align: super;
 }
 
 .btn.dropdown {
-  color: #DCDCDC;
-  text-align: left;
-  border: 1px solid #DCDCDC!important;
+    color: #dcdcdc;
+    text-align: left;
+    border: 1px solid #dcdcdc !important;
+    padding-left: 10px;
 }
 
 .dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 288px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+    display: none;
+    position: absolute;
+    min-width: 288px;
+    z-index: 1;
+
+    a:not(:first-child) {
+        padding-left: 45px;
+        padding-right: 16px;
+    }
+
+    a:first-child {
+        padding-right: 16px;
+    }
 }
 
 .dropdown-content a {
-  color: #8F8F8F;
-  padding: 12px 16px;
-  font-family: "Open Sans";
-  font-size: 14px;
-  line-height: 18px;
-  text-decoration: none;
-  display: block;
-  top: -40px;
-  position: relative;
-  background-color: inherit;
+    color: #8f8f8f;
+    padding: 12px 0px;
+    font-family: 'Open Sans';
+    font-size: 14px;
+    line-height: 18px;
+    text-decoration: none;
+    display: block;
+    top: -40px;
+    position: relative;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
-.dropdown-content a:hover {background-color: #f1f1f1}
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
 
 .dropdown .show.dropdown-content {
-  display: block;
+    display: block;
 }
 
 .btnGroup {
