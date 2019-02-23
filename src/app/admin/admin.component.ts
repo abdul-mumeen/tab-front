@@ -1,14 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
     templateUrl: 'admin.component.html',
     styleUrls: ['admin.component.scss'],
 })
-export class AdminComponent implements OnInit, OnDestroy {
+export class AdminComponent implements OnInit {
     loading: boolean = false;
+    showDropdownContent = false;
+    
+    @HostListener('document:click', ['$event'])
+    onClick(event) {
+      this.showDropdownContent = false;
+    }
+
     constructor(
         private loc: Location,
         private authService: AuthService,
@@ -16,7 +23,11 @@ export class AdminComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {}
-    ngOnDestroy() {}
+
+    toggleDropdown(event){
+      this.showDropdownContent = !this.showDropdownContent;
+      event.stopPropagation();
+    }
 
     async logout() {
         this.loading = true;

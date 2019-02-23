@@ -6,11 +6,13 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.route';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar'
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSelectModule, MatSnackBarModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material/select';
 
 import { InterceptService, AuthService, DBService } from './services/index';
 
@@ -23,7 +25,6 @@ import {
     LandingComponent,
     LoginComponent,
     SignupComponent,
-    AdminComponent,
     UserComponent,
 } from './shared/index';
 
@@ -35,7 +36,6 @@ import { AuthGuard, AdminGuard } from './guards/index';
         LandingComponent,
         LoginComponent,
         SignupComponent,
-        AdminComponent,
         UserComponent,
     ],
     imports: [
@@ -43,6 +43,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         BrowserModule,
         HttpClientModule,
         MatButtonModule,
+        MatSnackBarModule,
         routes,
         SharedComponentModule,
         AngularFireModule.initializeApp(environment.firebase),
@@ -51,8 +52,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         FormsModule,
         ReactiveFormsModule,
         MatExpansionModule,
-        MatSelectModule,
-        MatSnackBarModule,
+        MatSelectModule
     ],
     providers: [
         AuthGuard,
@@ -61,6 +61,9 @@ import { AuthGuard, AdminGuard } from './guards/index';
         DBService,
         { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true },
         { provide: Window, useValue: window },
+        {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+          useValue: {duration: 3000, panelClass: 'snackBarLength'}
+        }
     ],
     bootstrap: [AppComponent],
 })
