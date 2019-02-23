@@ -2,18 +2,37 @@
     margin: 30px auto;
 }
 
-button {
-    margin-bottom: 12px;
+.nav-header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 0 0 20px;
+    margin-bottom: 30px;
+    width: 100%;
+    color: #fd7f81;
+
+    i {
+        font-size: 20px;
+        cursor: pointer;
+    }
 }
 
 .logoBox {
     height: 40px;
     width: 180px;
     background-repeat: no-repeat;
-    background-image: url('../../assets/logo.png');
+    background-image: url('../../../../assets/logo.png');
     background-size: 180px 40px;
     background-position: center;
     margin-bottom: 30px;
+}
+
+.actions {
+    cursor: pointer;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
 }
 
 .pngIcon {
@@ -41,7 +60,7 @@ button {
 .dropdown-content {
     display: none;
     position: absolute;
-    min-width: 288px;
+    min-width: 220px;
     z-index: 1;
 
     a:not(:first-child) {
@@ -76,6 +95,11 @@ button {
     display: block;
 }
 
-.btnGroup {
-    width: 288px;
+.content {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 50px;
 }
