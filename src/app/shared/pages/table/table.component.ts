@@ -12,6 +12,7 @@ export class TableComponent implements OnInit, OnDestroy {
     loading: boolean = false;
     showDropdownContent = false;
     tableName: string;
+    tableMetadata: any;
 
     @HostListener('document:click', ['$event'])
     onClick(event) {
@@ -26,8 +27,11 @@ export class TableComponent implements OnInit, OnDestroy {
         private authService: AuthService,
     ) {}
 
-    ngOnInit() {
+    async ngOnInit() {
         this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
+        this.tableMetadata = await this.dbService.getTableMetaData(
+            this.tableName,
+        );
     }
     ngOnDestroy() {}
 
