@@ -104,7 +104,7 @@ export class AuthService {
         try {
             await firebase
                 .auth()
-                .signInAndRetrieveDataWithEmailAndPassword(email, password);
+                .signInWithEmailAndPassword(email, password);
             const userDocRef = await this.getDoc(`users/${this.user.uid}`);
             const userDoc = userDocRef.data();
             this.user.role = userDoc.role || '';

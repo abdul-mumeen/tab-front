@@ -1,17 +1,17 @@
 <div class="container">
-    <div class="login-box">
+    <div class="page-box">
         <div class="nav-header">
             <i class="material-icons" (click)="back()">arrow_back_ios</i>
         </div>
         <div class="logoBox"></div>
-        <form class="form" [formGroup]="loginForm">
+        <form class="form" (ngSubmit)="login(loginForm.value)" [formGroup]="loginForm">
             <input
                 class="input"
                 type="text"
                 name="email"
                 formControlName="email"
                 placeholder="gabriel.melo@gmail.com"
-                [disabled]="loading"
+                autocomplete="off"
             />
             <input
                 class="input"
@@ -19,15 +19,14 @@
                 name="password"
                 formControlName="password"
                 placeholder="********"
-                [disabled]="loading"
+                autocomplete="off"
             />
             <button
-                class="pinkButton"
+                class="btn pink"
                 tabindex="3"
-                type="button"
+                type="submit"
                 name="button"
                 [disabled]="loading"
-                (click)="login(loginForm.value)"
             >
                 <div class="buttonLabel" *ngIf="!loading">
                     Login

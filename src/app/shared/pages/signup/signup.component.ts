@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { AuthService } from '../../../services/auth.service';
 import { FormGroup, FormControl, FormBuilder, Validator } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     templateUrl: 'signup.component.html',
@@ -15,12 +16,13 @@ export class SignupComponent implements OnInit, OnDestroy {
     constructor(
         private loc: Location,
         private authService: AuthService,
+        private snackBar: MatSnackBar,
         private router: Router,
     ) {
         this.signupForm = new FormGroup({
-            name: new FormControl(),
-            email: new FormControl(),
-            password: new FormControl(),
+            name: new FormControl({value: '', disabled: this.loading}),
+            email: new FormControl({value: '', disabled: this.loading}),
+            password: new FormControl({value: '', disabled: this.loading}),
         });
     }
 
@@ -40,6 +42,10 @@ export class SignupComponent implements OnInit, OnDestroy {
             );
             this.router.navigate(['/dashboard']);
         } catch (error) {
+          this.snackBar.open(
+            'Registration failed!',
+            'Close'
+          )
         } finally {
             this.loading = false;
         }
