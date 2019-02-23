@@ -10,7 +10,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSelectModule } from '@angular/material/select';
+import { MatSelectModule, MatSnackBarModule } from '@angular/material';
 
 import { InterceptService, AuthService, DBService } from './services/index';
 
@@ -52,6 +52,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         ReactiveFormsModule,
         MatExpansionModule,
         MatSelectModule,
+        MatSnackBarModule,
     ],
     providers: [
         AuthGuard,

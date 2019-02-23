@@ -5,6 +5,7 @@
                 <mat-select
                     [placeholder]="selectPlaceholder"
                     [disabled]="disableSelect"
+                    (selectionChange)="handleChange($event)"
                 >
                     <mat-option
                         *ngFor="let table of tables"

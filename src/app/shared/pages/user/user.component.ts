@@ -38,6 +38,11 @@ export class UserComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy() {}
 
+    handleChange(event) {
+        const table = event.value;
+        this.router.navigate([`/tables/${table}`]);
+    }
+
     async goHome() {
         this.loading = true;
         try {

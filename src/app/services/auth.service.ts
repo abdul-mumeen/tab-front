@@ -89,7 +89,6 @@ export class AuthService {
 
     public checkUser(): Observable<UserModel> {
         // this is used in _guards to check if we have already got user info in session, if not it will load from firebase
-        console.log(this.user, 'user auth');
         return of(this.user);
     }
 

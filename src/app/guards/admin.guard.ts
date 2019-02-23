@@ -20,7 +20,6 @@ export class AdminGuard implements CanActivate {
                 let role: string = '';
                 if (result) {
                     role = result.role;
-                    console.log(role, 'role >>>>>>>>>');
                 }
                 if (role === 'admin') {
                     return true;

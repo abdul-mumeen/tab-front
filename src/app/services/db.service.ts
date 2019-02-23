@@ -25,15 +25,15 @@ export class DBService {
     ) {}
 
     async getTables() {
-        const tables = await this.http
-            .get(`${this.apiUrl}/get-tables`)
-            .toPromise()['tables'];
-        const tableSelect = tables.map(table => {
-            return {
-                displayName: table,
-                value: table,
-            };
-        });
+        // const tables = await this.http
+        //     .get(`${this.apiUrl}/get-tables`)
+        //     .toPromise()['tables'];
+        // const tableSelect = tables.map(table => {
+        //     return {
+        //         displayName: table,
+        //         value: table,
+        //     };
+        // });
         // return tableSelect
         return [
             {
