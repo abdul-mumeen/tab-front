@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="signup-box">
+        <div class="content">
+            <div class="dropdown">
+                <button
+                    id="dropdown"
+                    (click)="toggleDropdown($event)"
+                    class="btn dropdown"
+                >
+                    <img
+                        class="pngIcon"
+                        src="../../../../assets/action.png"
+                        alt=""
+                    />
+                    <span class="buttonLabel">
+                        Choose an action
+                    </span>
+                    <mat-icon *ngIf="!showDropdownContent" style="float:right;"
+                        >expand_more</mat-icon
+                    >
+                    <mat-icon *ngIf="showDropdownContent" style="float:right;"
+                        >expand_less</mat-icon
+                    >
+                </button>
+                <div
+                    [ngClass]="{ show: showDropdownContent }"
+                    class="dropdown-content"
+                >
+                    <a (click)="toggleDropdown()">
+                        <img
+                            class="pngIcon"
+                            src="../../../../assets/action.png"
+                            alt=""
+                        />
+                        <span class="buttonLabel">
+                            Choose an action
+                        </span>
+                        <mat-icon style="float:right;">expand_less</mat-icon>
+                    </a>
+                    <a href="#">Add a new record</a>
+                    <a href="#">Edit an existing record</a>
+                    <a href="#">Upload a file input</a>
+                </div>
+            </div>
+        </div>
+        <page-footer></page-footer>
+    </div>
+</div>

@@ -7,12 +7,18 @@ import {
     SignupComponent,
     DashboardRedirect,
     UserComponent,
+    TableComponent,
 } from './shared/index';
 
 const appRoutes: Routes = [
     {
         path: 'dashboard',
         component: DashboardRedirect,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'tables/:name',
+        component: TableComponent,
         canActivate: [AuthGuard],
     },
     { path: 'landing', component: LandingComponent },

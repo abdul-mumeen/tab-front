@@ -1,14 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
-    templateUrl: 'user.component.html',
-    styleUrls: ['user.component.scss'],
+    templateUrl: 'table.component.html',
+    styleUrls: ['table.component.scss'],
 })
-export class UserComponent implements OnInit, OnDestroy {
+export class TableComponent implements OnInit, OnDestroy {
     loading: boolean = false;
+    showDropdownContent = false;
+
+    @HostListener('document:click', ['$event'])
+    onClick(event) {
+        this.showDropdownContent = false;
+    }
+
     constructor(
         private loc: Location,
         private authService: AuthService,
@@ -17,6 +24,11 @@ export class UserComponent implements OnInit, OnDestroy {
 
     ngOnInit() {}
     ngOnDestroy() {}
+
+    toggleDropdown(event) {
+        this.showDropdownContent = !this.showDropdownContent;
+        event.stopPropagation();
+    }
 
     async logout() {
         this.loading = true;

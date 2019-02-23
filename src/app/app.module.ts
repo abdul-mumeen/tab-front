@@ -6,7 +6,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.route';
 import { MatButtonModule } from '@angular/material/button';
-import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar'
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -26,6 +26,7 @@ import {
     LoginComponent,
     SignupComponent,
     UserComponent,
+    TableComponent,
 } from './shared/index';
 
 import { AuthGuard, AdminGuard } from './guards/index';
@@ -37,6 +38,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         LoginComponent,
         SignupComponent,
         UserComponent,
+        TableComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -52,7 +54,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         FormsModule,
         ReactiveFormsModule,
         MatExpansionModule,
-        MatSelectModule
+        MatSelectModule,
     ],
     providers: [
         AuthGuard,
@@ -61,9 +63,10 @@ import { AuthGuard, AdminGuard } from './guards/index';
         DBService,
         { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true },
         { provide: Window, useValue: window },
-        {provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-          useValue: {duration: 3000, panelClass: 'snackBarLength'}
-        }
+        {
+            provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+            useValue: { duration: 3000, panelClass: 'snackBarLength' },
+        },
     ],
     bootstrap: [AppComponent],
 })
