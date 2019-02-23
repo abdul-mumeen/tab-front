@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="signup-box">
+    <div class="page-box">
         <div class="nav-header">
             <i class="material-icons" (click)="back()">arrow_back_ios</i>
         </div>
@@ -11,7 +11,7 @@
                 name="name"
                 placeholder="Gabriel Melo"
                 formControlName="name"
-                [disabled]="loading"
+                autocomplete="off"
                 required
             />
             <input
@@ -20,7 +20,7 @@
                 name="email"
                 placeholder="gabriel.melo@gmail.com"
                 formControlName="email"
-                [disabled]="loading"
+                autocomplete="off"
                 required
             />
             <input
@@ -29,11 +29,11 @@
                 name="password"
                 placeholder="********"
                 formControlName="password"
-                [disabled]="loading"
+                autocomplete="off"
                 required
             />
             <button
-                class="pinkButton"
+                class="btn pink"
                 tabindex="3"
                 type="button"
                 name="button"

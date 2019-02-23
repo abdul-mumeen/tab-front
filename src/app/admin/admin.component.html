@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="page-box" style="padding-top: 60px;">
+        <div class="logoBox"></div>
+        <div class="btnGroup">
+          <div class="dropdown">
+            <button id="dropdown" (click)="toggleDropdown($event)" class="btn dropdown">
+              <img class="pngIcon" src="../../../../assets/chart.png" alt="">
+              <span class="buttonLabel">
+                Connect to database
+              </span>
+              <mat-icon *ngIf="!showDropdownContent" style="float:right;">expand_more</mat-icon>
+              <mat-icon *ngIf="showDropdownContent" style="float:right;">expand_less</mat-icon>
+            </button>
+            <div [ngClass]="{'show':showDropdownContent}" class="dropdown-content">
+            <a (click)="toggleDropdown()">
+              <img class="pngIcon" src="../../../../assets/chart.png" alt="">
+              <span class="buttonLabel">
+                Connect to database
+              </span>
+              <mat-icon style="float:right;">expand_less</mat-icon>
+            </a>
+            <a href="#">My SQL</a>
+            <a href="#">MS SQL Server</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+            </div>
+          </div>
+          <button class="btn dropdown">
+            <img class="pngIcon" src="../../../../assets/table.png" alt="">
+            <span class="buttonLabel">
+              Create a Table
+            </span>
+          </button>
+          <button class="btn dropdown">
+            <img class="pngIcon" src="../../../../assets/clock.png" alt="">
+            <span class="buttonLabel">
+              Connect to a Table
+            </span>
+          </button>
+        </div>
+        <div style="margin-top:28px">
+          <page-footer></page-footer>
+        </div>
+    </div>
+</div>

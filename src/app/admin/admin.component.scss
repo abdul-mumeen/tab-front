@@ -1,0 +1,70 @@
+.center30 { 
+    margin: 30px auto;
+}
+
+button{
+  margin-bottom: 12px;
+}
+
+.logoBox {
+    height: 40px;
+    width: 180px;
+    background-repeat: no-repeat;
+    background-image: url('../../assets/logo.png');
+    background-size: 180px 40px;
+    background-position: center;
+    margin-bottom: 30px;
+}
+
+.pngIcon{
+  width: 20px;
+  height: 20px;
+  margin: 0 12px;
+}
+
+.buttonLabel{
+  height: 18px;
+  font-family: "Open Sans";
+  color: #8F8F8F;
+  font-size: 14px;
+  line-height: 18px;
+  vertical-align: super;
+}
+
+.btn.dropdown {
+  color: #DCDCDC;
+  text-align: left;
+  border: 1px solid #DCDCDC!important;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 288px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #8F8F8F;
+  padding: 12px 16px;
+  font-family: "Open Sans";
+  font-size: 14px;
+  line-height: 18px;
+  text-decoration: none;
+  display: block;
+  top: -40px;
+  position: relative;
+  background-color: inherit;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown .show.dropdown-content {
+  display: block;
+}
+
+.btnGroup {
+    width: 288px;
+}

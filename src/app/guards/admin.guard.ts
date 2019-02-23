@@ -29,7 +29,7 @@ export class AdminGuard implements CanActivate {
                         // don't end up in a loop going to login over and over
                         this.router.navigate(['/user']);
                     } else {
-                        this.router.navigate(['/landing'], {
+                        this.router.navigate(['/login'], {
                             queryParams: { returnUrl: state.url },
                         });
                     }
