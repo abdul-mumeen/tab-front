@@ -16,14 +16,31 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <button
-            class="pinkButton"
-            type="button"
-            name="button"
-            [disabled]="loading"
-            (click)="goHome()"
-        >
-            Home
-        </button>
+        <div class="bottom-buttons">
+            <div>
+                <button
+                    class="outlineButton"
+                    type="button"
+                    name="button"
+                    [disabled]="loading"
+                    (click)="goHome()"
+                    fill="outline"
+                >
+                    Home
+                </button>
+            </div>
+            <div>
+                <button
+                    class="outlineButton"
+                    type="button"
+                    name="button"
+                    [disabled]="loading"
+                    (click)="goHome()"
+                    fill="outline"
+                >
+                    Support
+                </button>
+            </div>
+        </div>
     </div>
 </div>
