@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DBService } from '../../../services/db.service';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -10,6 +11,7 @@ import { AuthService } from '../../../services/auth.service';
 export class TableComponent implements OnInit, OnDestroy {
     loading: boolean = false;
     showDropdownContent = false;
+    tableName: string;
 
     @HostListener('document:click', ['$event'])
     onClick(event) {
@@ -18,11 +20,15 @@ export class TableComponent implements OnInit, OnDestroy {
 
     constructor(
         private loc: Location,
-        private authService: AuthService,
+        private dbService: DBService,
         private router: Router,
+        private activatedRoute: ActivatedRoute,
+        private authService: AuthService,
     ) {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
+    }
     ngOnDestroy() {}
 
     toggleDropdown(event) {
@@ -39,5 +45,9 @@ export class TableComponent implements OnInit, OnDestroy {
         } finally {
             this.loading = false;
         }
+    }
+
+    back() {
+        this.loc.back();
     }
 }

@@ -2,15 +2,18 @@
     margin: 30px auto;
 }
 
-.signup-box {
-    width: 393px;
-    border-radius: 7px;
-    background-color: #ffffff;
-    box-shadow: 1px 4px 16px 0 rgba(188, 188, 188, 0.5);
+.nav-header {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 30px;
+    justify-content: flex-start;
+    padding: 10px 0 0 20px;
+    margin-bottom: 30px;
+    width: 100%;
+    color: #fd7f81;
+
+    i {
+        font-size: 20px;
+        cursor: pointer;
+    }
 }
 
 .logoBox {
@@ -57,13 +60,22 @@
     display: none;
     position: absolute;
     background-color: #fff;
-    min-width: 288px;
+    min-width: 220px;
     z-index: 1;
+
+    a:not(:first-child) {
+        padding-left: 45px;
+        padding-right: 16px;
+    }
+
+    a:first-child {
+        padding-right: 16px;
+    }
 }
 
 .dropdown-content a {
     color: #8f8f8f;
-    padding: 12px 16px;
+    padding: 12px 0px;
     font-family: 'Open Sans';
     font-size: 14px;
     line-height: 18px;
@@ -83,14 +95,11 @@
     display: block;
 }
 
-.btnGroup {
-    width: 288px;
-}
-
 .content {
-    height: 200px;
+    height: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-bottom: 50px;
 }
