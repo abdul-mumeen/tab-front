@@ -16,6 +16,18 @@ button {
     margin-right: 8px;
 }
 
+.outlineButton {
+    border-radius: 100px;
+    // background-color: #fd7f81;
+    color: #fd7f81;
+    padding: 5px 15px 5px 15px;
+    cursor: pointer;
+    height: 40px;
+    width: 100%;
+    margin-right: 8px;
+    border-color: #fd7f81;
+}
+
 .buttonIcon {
     display: inline-block;
     font-size: 11pt;

@@ -1,15 +1,46 @@
 <div class="container">
     <div class="signup-box">
-        <div class="logoBox"></div>
-        <div>This is the user placeholder</div>
-        <button
-            class="pinkButton"
-            type="button"
-            name="button"
-            [disabled]="loading"
-            (click)="logout()"
-        >
-            Log out
-        </button>
+        <div class="content">
+            <mat-form-field>
+                <mat-select
+                    [placeholder]="selectPlaceholder"
+                    [disabled]="disableSelect"
+                    (selectionChange)="handleChange($event)"
+                >
+                    <mat-option
+                        *ngFor="let table of tables"
+                        [value]="table.value"
+                    >
+                        {{ table.displayName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="bottom-buttons">
+            <div>
+                <button
+                    class="outlineButton"
+                    type="button"
+                    name="button"
+                    [disabled]="loading"
+                    (click)="goHome()"
+                    fill="outline"
+                >
+                    Home
+                </button>
+            </div>
+            <div>
+                <button
+                    class="outlineButton"
+                    type="button"
+                    name="button"
+                    [disabled]="loading"
+                    (click)="goHome()"
+                    fill="outline"
+                >
+                    Support
+                </button>
+            </div>
+        </div>
     </div>
 </div>

@@ -9,8 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule, MatSnackBarModule } from '@angular/material';
 
-import { InterceptService, AuthService } from './services/index';
+import { InterceptService, AuthService, DBService } from './services/index';
 
 import { environment } from '../environments/environment';
 
@@ -48,11 +50,15 @@ import { AuthGuard, AdminGuard } from './guards/index';
         AngularFirestoreModule,
         FormsModule,
         ReactiveFormsModule,
+        MatExpansionModule,
+        MatSelectModule,
+        MatSnackBarModule,
     ],
     providers: [
         AuthGuard,
         AdminGuard,
         AuthService,
+        DBService,
         { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true },
         { provide: Window, useValue: window },
     ],

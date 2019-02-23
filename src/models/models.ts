@@ -4,3 +4,8 @@ export interface UserModel extends User {
     role?: string;
     name?: string;
 }
+
+export interface TableSelect {
+    displayName: string;
+    value: string;
+}
