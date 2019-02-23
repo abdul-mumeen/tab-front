@@ -24,7 +24,26 @@ export class DBService {
         private afDb: AngularFirestore,
     ) {}
 
-    public getTables() {
-        return this.http.get(`${this.apiUrl}/get-tables`);
+    async getTables() {
+        const tables = await this.http
+            .get(`${this.apiUrl}/get-tables`)
+            .toPromise()['tables'];
+        const tableSelect = tables.map(table => {
+            return {
+                displayName: table,
+                value: table,
+            };
+        });
+        // return tableSelect
+        return [
+            {
+                displayName: 'chicken salad',
+                value: 'chicken salad',
+            },
+            {
+                displayName: 'pension',
+                value: 'pension',
+            },
+        ];
     }
 }
