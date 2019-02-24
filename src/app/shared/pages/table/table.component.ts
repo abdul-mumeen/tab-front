@@ -29,9 +29,7 @@ export class TableComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
         this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
-        this.tableMetadata = await this.dbService.getTableMetaData(
-            this.tableName,
-        );
+        this.tableMetadata = await this.dbService.getTableInfo(this.tableName);
     }
     ngOnDestroy() {}
 

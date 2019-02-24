@@ -19,6 +19,7 @@ export class DBService {
     private tables: string[] = [];
     private currentTableData: any = null;
     private currentTableName: string = '';
+    private currentTableDef: any = null;
 
     // this service is used everywhere and the constructor
     // gets called once when we first load/reload browser
@@ -43,8 +44,15 @@ export class DBService {
         return this.tables;
     }
 
-    async getTableMetaData(tableName: string) {
-        return true;
+    async getTableInfo(tableName: string) {
+        // Todo: Handle errors
+        const data = await this.http
+            .get(`${this.apiUrl}/table${tableName}`)
+            .toPromise()['data'];
+        this.currentTableName = tableName;
+        this.currentTableData = data['table']['rows'];
+        this.currentTableDef = data['table']['columns'];
+        return Promise.resolve();
     }
 
     createTables(tableData) {
