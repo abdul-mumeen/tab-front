@@ -16,6 +16,9 @@ export class DBService {
     public user: any;
     public LoggedIn: any;
     private token: string;
+    private tables: string[] = [];
+    private currentTableData: any = null;
+    private currentTableName: string = '';
 
     // this service is used everywhere and the constructor
     // gets called once when we first load/reload browser
@@ -23,20 +26,29 @@ export class DBService {
         private http: HttpClient,
         private afAuth: AngularFireAuth,
         private afDb: AngularFirestore,
-        private auth: AuthService
+        private auth: AuthService,
     ) {}
 
     getTables() {
-      var url:string = this.auth.apiUrl + '/table';
-      return this.http.get<any>(url);
+        var url: string = this.auth.apiUrl + '/table';
+        return this.http.get<any>(url);
+    }
+
+    async getTabless() {
+        // Todo: handle errors
+        const data = await this.http.get(`${this.apiUrl}/table`).toPromise()[
+            'tables'
+        ];
+        this.tables = data.tables;
+        return this.tables;
     }
 
     async getTableMetaData(tableName: string) {
         return true;
     }
 
-    createTables(tableData){
-      var url:string = this.auth.apiUrl + '/table';
-      return this.http.post(url, tableData);
+    createTables(tableData) {
+        var url: string = this.auth.apiUrl + '/table';
+        return this.http.post(url, tableData);
     }
 }
