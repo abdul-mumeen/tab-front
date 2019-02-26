@@ -1,0 +1,29 @@
+:host {
+  width: 100%;
+}
+
+.nav-header {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px 0 0 20px;
+    margin-bottom: 30px;
+    width: 100%;
+    color: #fd7f81;
+
+    i {
+        font-size: 20px;
+        cursor: pointer;
+    }
+}
+
+.logoBox {
+    height: 40px;
+    width: 180px;
+    background-repeat: no-repeat;
+    background-image: url('../../../../assets/logo.png');
+    background-size: 180px 40px;
+    background-position: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}

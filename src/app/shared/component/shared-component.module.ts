@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { DashboardRedirect } from './dashboard-redirect.component';
 import { LogoutComponent } from './logout.component';
 import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   imports: [
@@ -13,11 +14,12 @@ import { FooterComponent } from './footer/footer.component';
     MatIconModule,
   ],
   declarations: [
-    LogoutComponent, DashboardRedirect, FooterComponent
+    LogoutComponent, DashboardRedirect,
+    FooterComponent, HeaderComponent
   ],
   exports: [
     LogoutComponent, DashboardRedirect, FooterComponent,
-    MatIconModule
+    MatIconModule, HeaderComponent
   ]
 })
 export class SharedComponentModule { }
