@@ -13,6 +13,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
+import { HotTableModule } from '@handsontable-pro/angular';
 
 import { InterceptService, AuthService, DBService } from './services/index';
 
@@ -27,6 +28,7 @@ import {
     SignupComponent,
     UserComponent,
     TableComponent,
+    AddComponent,
 } from './shared/index';
 
 import { AuthGuard, AdminGuard } from './guards/index';
@@ -39,6 +41,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         SignupComponent,
         UserComponent,
         TableComponent,
+        AddComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -55,6 +58,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         ReactiveFormsModule,
         MatExpansionModule,
         MatSelectModule,
+        HotTableModule,
     ],
     providers: [
         AuthGuard,

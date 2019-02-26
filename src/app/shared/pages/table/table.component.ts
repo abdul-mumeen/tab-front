@@ -49,6 +49,17 @@ export class TableComponent implements OnInit, OnDestroy {
         }
     }
 
+    handleClick(event: any, action: string) {
+        event.preventDefault();
+        switch (action) {
+            case 'add':
+                this.router.navigate([`tables/${this.tableName}/add`]);
+                break;
+            default:
+                console.log('error');
+        }
+    }
+
     back() {
         this.loc.back();
     }

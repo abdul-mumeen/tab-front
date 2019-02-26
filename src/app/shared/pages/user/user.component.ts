@@ -28,8 +28,8 @@ export class UserComponent implements OnInit, OnDestroy {
         this.loading = true;
         // this.tables = await this.dbService.getTables().toPromise();
         // if (!!this.tables) {
-        const tables = await this.dbService.getTabless();
-        if (!!tables) {
+        // const tables = await this.dbService.getTables();
+        if (true) {
             // this.tables = tables.map(table => {
             //     return {
             //         displayName: table,

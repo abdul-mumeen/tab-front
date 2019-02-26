@@ -8,6 +8,7 @@ import {
     DashboardRedirect,
     UserComponent,
     TableComponent,
+    AddComponent,
 } from './shared/index';
 
 const appRoutes: Routes = [
@@ -19,6 +20,11 @@ const appRoutes: Routes = [
     {
         path: 'tables/:name',
         component: TableComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'tables/:name/add',
+        component: AddComponent,
         canActivate: [AuthGuard],
     },
     { path: 'landing', component: LandingComponent },
