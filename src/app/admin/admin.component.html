@@ -1,6 +1,6 @@
 <div class="container">
     <div class="page-box" style="padding-top: 60px;">
-        <div class="logoBox"></div>
+        <page-header [showBackButton]="false"></page-header>
         <div class="btnGroup">
           <div class="dropdown">
             <button id="dropdown" (click)="toggleDropdown($event)" class="btn dropdown">
@@ -25,18 +25,33 @@
             <a href="#">Link 3</a>
             </div>
           </div>
-          <button class="btn dropdown">
+          <button routerLink="table/new" class="btn dropdown">
             <img class="pngIcon" src="../../../../assets/table.png" alt="">
             <span class="buttonLabel">
               Create a Table
             </span>
           </button>
-          <button class="btn dropdown">
+          <button (click)="toggleTableListDropdown($event)" class="btn dropdown">
             <img class="pngIcon" src="../../../../assets/clock.png" alt="">
             <span class="buttonLabel">
               Connect to a Table
             </span>
+            <mat-icon *ngIf="showTableDropdown" style="float:right;">expand_less</mat-icon>
+            <mat-icon *ngIf="!showTableDropdown" style="float:right;">expand_more</mat-icon>
           </button>
+          <div
+              [ngClass]="{ show: showTableDropdown }"
+              class="dropdown-content"
+          >
+              <a (click)="toggleTableListDropdown($event)">
+                  <img class="pngIcon" src="../../../../assets/clock.png" alt="">
+                  <span class="buttonLabel">
+                      Connect to a Table
+                  </span>
+                  <mat-icon style="float:right;">expand_less</mat-icon>
+              </a>
+              <a *ngFor="let table of tables" (click)="toggleTableListDropdown($event)">{{table.name}}</a>
+          </div>
         </div>
         <div style="margin-top:28px">
           <page-footer></page-footer>

@@ -3,7 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, exhaustMap, flatMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
@@ -22,32 +23,20 @@ export class DBService {
         private http: HttpClient,
         private afAuth: AngularFireAuth,
         private afDb: AngularFirestore,
+        private auth: AuthService
     ) {}
 
-    async getTables() {
-        // const tables = await this.http
-        //     .get(`${this.apiUrl}/get-tables`)
-        //     .toPromise()['tables'];
-        // const tableSelect = tables.map(table => {
-        //     return {
-        //         displayName: table,
-        //         value: table,
-        //     };
-        // });
-        // return tableSelect
-        return [
-            {
-                displayName: 'chicken salad',
-                value: 'chicken salad',
-            },
-            {
-                displayName: 'pension',
-                value: 'pension',
-            },
-        ];
+    getTables() {
+      var url:string = this.auth.apiUrl + '/table';
+      return this.http.get<any>(url);
     }
 
     async getTableMetaData(tableName: string) {
         return true;
+    }
+
+    createTables(tableData){
+      var url:string = this.auth.apiUrl + '/table';
+      return this.http.post(url, tableData);
     }
 }

@@ -26,7 +26,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
         this.loading = true;
-        this.tables = await this.dbService.getTables();
+        this.tables = await this.dbService.getTables().toPromise();
         if (!!this.tables) {
             this.disableSelect = false;
             this.selectPlaceholder = 'Connect to tables';

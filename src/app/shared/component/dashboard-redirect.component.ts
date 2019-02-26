@@ -29,7 +29,7 @@ export class DashboardRedirect implements OnInit {
                 navTo = '/user';
                 break;
             default:
-                navTo = '/landing';
+                navTo = '/login';
                 break;
         }
 

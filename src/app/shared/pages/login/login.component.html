@@ -1,9 +1,6 @@
 <div class="container">
     <div class="page-box">
-        <div class="nav-header">
-            <i class="material-icons" (click)="back()">arrow_back_ios</i>
-        </div>
-        <div class="logoBox"></div>
+        <page-header [showBackButton]="true"></page-header>
         <form class="form" (ngSubmit)="login(loginForm.value)" [formGroup]="loginForm">
             <input
                 class="input"

@@ -6,20 +6,10 @@ button {
     margin-bottom: 12px;
 }
 
-.logoBox {
-    height: 40px;
-    width: 180px;
-    background-repeat: no-repeat;
-    background-image: url('../../assets/logo.png');
-    background-size: 180px 40px;
-    background-position: center;
-    margin-bottom: 30px;
-}
-
-.pngIcon {
-    width: 20px;
-    height: 20px;
-    margin: 0 12px;
+.pngIcon{
+  width: 20px;
+  height: 20px;
+  margin: 0 12px;
 }
 
 .buttonLabel {
@@ -72,7 +62,7 @@ button {
     background-color: #f1f1f1;
 }
 
-.dropdown .show.dropdown-content {
+.show.dropdown-content {
     display: block;
 }
 
