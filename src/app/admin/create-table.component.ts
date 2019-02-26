@@ -15,6 +15,7 @@ export class CreateTables implements OnInit {
   tableForm: FormGroup;
   loading:boolean = false;
   displayInput:any = {0: true};
+  get formArray() { return <FormArray>this.tableForm.get('columns'); }
   
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -54,11 +55,11 @@ export class CreateTables implements OnInit {
   }
 
   deleteRow(index){
-    this.tableForm.controls.columns.removeAt(index)
+    this.formArray.removeAt(index)
   }
 
   addRow(){
-    this.tableForm.controls.columns.push(
+    this.formArray.push(
       new FormGroup({
         name: new FormControl('', Validators.required),
         type: new FormControl('', Validators.required)
@@ -97,6 +98,6 @@ export class CreateTables implements OnInit {
   }
   
   setDataTypeValue(index, val){
-    this.tableForm.controls.columns.at(index).get('type').setValue(val)
+    this.formArray.at(index).get('type').setValue(val)
   }
 }
