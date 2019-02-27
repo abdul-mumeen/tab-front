@@ -12,43 +12,40 @@ export class AdminComponent implements OnInit {
     loading: boolean = false;
     showDropdownContent = false;
     showTableDropdown = false;
-    tables:Array<any> = [];
-    
+    tables: Array<any> = [];
+
     @HostListener('document:click', ['$event'])
     onClick(event) {
-      this.showDropdownContent = false;
-      this.showTableDropdown = false;
+        this.showDropdownContent = false;
+        this.showTableDropdown = false;
     }
 
     constructor(
         private authService: AuthService,
         private router: Router,
         private db: DBService,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
     ) {}
 
     ngOnInit() {
-      this.db.getTables().subscribe(
-        (result)=>{
-          this.tables = result.data.tables
-        },
-        (error)=>{
-          this.snackBar.open(
-            'Error getting tables',
-            'Close'
-          )
-        }
-      )
+        this.db.getTables().subscribe(
+            result => {
+                this.tables = result.data.tables;
+            },
+            error => {
+                this.snackBar.open('Error getting tables', 'Close');
+            },
+        );
     }
 
-    toggleDropdown(event){
-      this.showDropdownContent = !this.showDropdownContent;
-      event.stopPropagation();
+    toggleDropdown(event) {
+        this.showDropdownContent = !this.showDropdownContent;
+        event.stopPropagation();
     }
 
-    toggleTableListDropdown(event){
-      this.showTableDropdown = !this.showTableDropdown;
-      event.stopPropagation();
+    toggleTableListDropdown(event) {
+        this.showTableDropdown = !this.showTableDropdown;
+        event.stopPropagation();
     }
 
     async logout() {

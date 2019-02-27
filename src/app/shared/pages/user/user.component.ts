@@ -26,26 +26,15 @@ export class UserComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
         this.loading = true;
-        // this.tables = await this.dbService.getTables().toPromise();
-        // if (!!this.tables) {
-        // const tables = await this.dbService.getTables();
-        if (true) {
-            // this.tables = tables.map(table => {
-            //     return {
-            //         displayName: table,
-            //         value: table,
-            //     };
-            // });
-            this.tables = [
-                {
-                    displayName: 'chicken salad',
-                    value: 'chicken salad',
-                },
-                {
-                    displayName: 'pension',
-                    value: 'pension',
-                },
-            ];
+        const result = await this.dbService.getTables().toPromise();
+        const tables = !!result ? result.data.tables : [];
+        if (!!tables) {
+            this.tables = tables.map(table => {
+                return {
+                    displayName: table.name,
+                    value: table.name,
+                };
+            });
             this.disableSelect = false;
             this.selectPlaceholder = 'Connect to tables';
         } else {

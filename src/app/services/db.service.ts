@@ -31,7 +31,7 @@ export class DBService {
     ) {}
 
     getTables() {
-        var url: string = this.auth.apiUrl + '/table';
+        const url: string = this.auth.apiUrl + '/table';
         return this.http.get<any>(url);
     }
 
@@ -46,17 +46,36 @@ export class DBService {
 
     async getTableInfo(tableName: string) {
         // Todo: Handle errors
-        const data = await this.http
-            .get(`${this.apiUrl}/table${tableName}`)
-            .toPromise()['data'];
-        this.currentTableName = tableName;
-        this.currentTableData = data['table']['rows'];
-        this.currentTableDef = data['table']['columns'];
-        return Promise.resolve();
+        try {
+            const url: string = this.auth.apiUrl + `/table/${tableName}`;
+            console.log(url, 'url');
+            const response = await this.http.get<any>(url).toPromise();
+
+            this.currentTableName = tableName;
+            this.currentTableData = response.data['table']['rows'];
+            this.currentTableDef = response.data['table']['columns'];
+            return Promise.resolve();
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 
     createTables(tableData) {
-        var url: string = this.auth.apiUrl + '/table';
+        const url: string = this.auth.apiUrl + '/table';
         return this.http.post(url, tableData);
+    }
+
+    addEntries(rowsData) {
+        const url: string =
+            this.auth.apiUrl + `/table/${this.currentTableName}/records`;
+        return this.http.post(url, rowsData);
+    }
+
+    getCurrentTableDef(): Array<{}> {
+        return this.currentTableDef;
+    }
+
+    getCurrentTableData() {
+        return this.currentTableData;
     }
 }

@@ -8,13 +8,11 @@
                 [hotId]="tableId"
                 [settings]="tableSettings"
                 [data]="dataset"
+                [columns]="columnHeaders"
                 class="tableStyle"
             >
-                <hot-column data="id" [readOnly]="true" title="ID"></hot-column>
-                <hot-column data="name" title="Full name"></hot-column>
-                <hot-column data="address" title="Street name"></hot-column>
             </hot-table>
-            <div>
+            <div style="width:100%">
                 <button
                     class="btn pink"
                     type="button"
@@ -22,10 +20,18 @@
                     (click)="submit()"
                     [disabled]="loading"
                 >
-                    <div *ngIf="!loading" class="buttonLabel">
+                    <div
+                        *ngIf="!loading"
+                        style="color:#FFFFFF"
+                        class="buttonLabel"
+                    >
                         Submit
                     </div>
-                    <div *ngIf="loading" class="buttonLabel">
+                    <div
+                        *ngIf="loading"
+                        style="color:#FFFFFF"
+                        class="buttonLabel"
+                    >
                         submitting...
                     </div>
                 </button>

@@ -13,6 +13,7 @@ export class TableComponent implements OnInit, OnDestroy {
     showDropdownContent = false;
     tableName: string;
     tableMetadata: any;
+    error: boolean = false;
 
     @HostListener('document:click', ['$event'])
     onClick(event) {
@@ -29,7 +30,13 @@ export class TableComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
         this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
-        this.tableMetadata = await this.dbService.getTableInfo(this.tableName);
+        try {
+            this.tableMetadata = await this.dbService.getTableInfo(
+                this.tableName,
+            );
+        } catch {
+            this.error = true;
+        }
     }
     ngOnDestroy() {}
 
