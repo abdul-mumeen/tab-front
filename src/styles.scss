@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~handsontable-pro/dist/handsontable.full.css';
 
-body{
-  font-size: 14px;
+body {
+    font-size: 14px;
 }
 button {
     outline: none;
@@ -20,8 +21,8 @@ button {
     padding-bottom: 30px;
 }
 
-.pink{
-  background-color: #fd7f81!important;
+.pink {
+    background-color: #fd7f81 !important;
 }
 
 .btn {
@@ -36,8 +37,8 @@ button {
     border: medium none #fff;
 }
 
-.snackBarLength{
-  max-width: none!important;
+.snackBarLength {
+    max-width: none !important;
 }
 
 .outlineButton {

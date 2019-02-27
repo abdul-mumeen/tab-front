@@ -40,7 +40,9 @@
                         </span>
                         <mat-icon style="float:right;">expand_less</mat-icon>
                     </a>
-                    <a href="#">Add a new record</a>
+                    <a href="#" (click)="handleClick($event, 'add')"
+                        >Add a new record</a
+                    >
                     <a href="#">Edit an existing record</a>
                     <a href="#">Upload a file input</a>
                 </div>

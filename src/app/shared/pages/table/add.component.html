@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="page-box">
+        <div class="nav-header">
+            <i class="material-icons" (click)="back()">arrow_back_ios</i>
+        </div>
+        <div class="table-content">
+            <hot-table
+                [hotId]="tableId"
+                [settings]="tableSettings"
+                [data]="dataset"
+                [columns]="columnHeaders"
+                class="tableStyle"
+            >
+            </hot-table>
+            <div style="width:100%">
+                <button
+                    class="btn pink"
+                    type="button"
+                    name="button"
+                    (click)="submit()"
+                    [disabled]="loading"
+                >
+                    <div
+                        *ngIf="!loading"
+                        style="color:#FFFFFF"
+                        class="buttonLabel"
+                    >
+                        Submit
+                    </div>
+                    <div
+                        *ngIf="loading"
+                        style="color:#FFFFFF"
+                        class="buttonLabel"
+                    >
+                        submitting...
+                    </div>
+                </button>
+            </div>
+        </div>
+        <page-footer></page-footer>
+    </div>
+</div>

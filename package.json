@@ -22,8 +22,11 @@
     "@angular/platform-browser": "^7.2.4",
     "@angular/platform-browser-dynamic": "^7.2.4",
     "@angular/router": "^7.2.4",
+    "@handsontable-pro/angular": "^3.0.0",
     "core-js": "^2.5.4",
     "firebase": "^5.8.2",
+    "handsontable": "^6.2.2",
+    "handsontable-pro": "^6.2.2",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
