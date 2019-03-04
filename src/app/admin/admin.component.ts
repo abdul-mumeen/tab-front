@@ -43,9 +43,12 @@ export class AdminComponent implements OnInit {
         event.stopPropagation();
     }
 
-    toggleTableListDropdown(event) {
+    handleTableClick(event, tableName) {
         this.showTableDropdown = !this.showTableDropdown;
         event.stopPropagation();
+        if (tableName) {
+            this.router.navigate([`tables/${tableName}`]);
+        }
     }
 
     async logout() {

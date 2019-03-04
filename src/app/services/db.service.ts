@@ -48,7 +48,6 @@ export class DBService {
         // Todo: Handle errors
         try {
             const url: string = this.auth.apiUrl + `/table/${tableName}`;
-            console.log(url, 'url');
             const response = await this.http.get<any>(url).toPromise();
 
             this.currentTableName = tableName;
