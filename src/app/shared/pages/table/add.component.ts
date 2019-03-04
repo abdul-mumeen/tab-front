@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DBService } from '../../../services/db.service';
 import { AuthService } from '../../../services/auth.service';
+import { MatSnackBar } from '@angular/material';
 
 import * as Handsontable from 'handsontable';
 import { HotTableRegisterer } from '@handsontable-pro/angular';
@@ -31,11 +32,22 @@ export class AddComponent implements OnInit, OnDestroy {
         private router: Router,
         private activatedRoute: ActivatedRoute,
         private authService: AuthService,
+        private snackBar: MatSnackBar,
     ) {
         this.columns = this.dbService.getCurrentTableDef();
-        const obj = {};
+        this.resetTableColumns(this.columns);
+    }
 
-        this.columns.forEach(column => {
+    async ngOnInit() {
+        this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
+    }
+    ngOnDestroy() {}
+
+    resetTableColumns(columns) {
+        const obj = {};
+        this.dataset = [];
+
+        columns.forEach(column => {
             if (column['name'] !== 'id') {
                 obj[column['name']] = '';
                 this.columnHeaders.push({
@@ -51,14 +63,9 @@ export class AddComponent implements OnInit, OnDestroy {
         }
     }
 
-    async ngOnInit() {
-        this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
-    }
-    ngOnDestroy() {}
-
     async submit() {
         const data = this.hotRegisterer.getInstance(this.tableId).getData();
-        console.log(data, 'data');
+        const columnHeaders = Object.keys(this.dataset[0]);
         let gg = [];
         data.forEach(da => {
             let row = [];
@@ -68,7 +75,7 @@ export class AddComponent implements OnInit, OnDestroy {
                 if (d === '') {
                     return;
                 }
-                col['columnName'] = this.columns[i + 1]['name'];
+                col['columnName'] = columnHeaders[i];
                 col['value'] = d;
                 row.push(col);
             });
@@ -77,11 +84,28 @@ export class AddComponent implements OnInit, OnDestroy {
             }
             gg.push(row);
         });
+
         try {
             await this.dbService.addEntries({ rows: gg }).toPromise();
-            console.log('Records successfully added');
+            const sOrNoS = gg.length > 1 ? 's have' : ' has';
+            const message = `${
+                gg.length
+            } record${sOrNoS} been successfully added`;
+            this.snackBar.open(message, 'dismiss', {
+                duration: 5000,
+                verticalPosition: 'top',
+            });
+            this.resetTableColumns(this.columns);
         } catch (error) {
-            console.log(error);
+            console.log(error, 'error');
+            this.snackBar.open(
+                'An error occur, kindly check the record and try again',
+                'dismiss',
+                {
+                    duration: 5000,
+                    verticalPosition: 'top',
+                },
+            );
         }
     }
 
