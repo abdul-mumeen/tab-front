@@ -15,8 +15,9 @@ export class CreateTables implements OnInit {
   tableForm: FormGroup;
   loading:boolean = false;
   displayInput:any = {0: true};
+  columns: any = this.tableForm.get('columns');
   get formArray() { return <FormArray>this.tableForm.get('columns'); }
-  
+
   @HostListener('document:click', ['$event'])
   onClick(event) {
     this.showDropdownContent = {0: false};
@@ -96,7 +97,7 @@ export class CreateTables implements OnInit {
       this.loading = false
     }
   }
-  
+
   setDataTypeValue(index, val){
     this.formArray.at(index).get('type').setValue(val)
   }

@@ -66,7 +66,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         AuthService,
         DBService,
         { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true },
-        { provide: Window, useValue: window },
+        // { provide: Window, useValue: window },
         {
             provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
             useValue: { duration: 3000, panelClass: 'snackBarLength' },

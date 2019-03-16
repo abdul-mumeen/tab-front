@@ -43,7 +43,7 @@ export class AdminComponent implements OnInit {
         event.stopPropagation();
     }
 
-    handleTableClick(event, tableName) {
+    handleTableClick(event, tableName?) {
         this.showTableDropdown = !this.showTableDropdown;
         event.stopPropagation();
         if (tableName) {

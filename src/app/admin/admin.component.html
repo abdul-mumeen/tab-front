@@ -27,7 +27,7 @@
                     [ngClass]="{ show: showDropdownContent }"
                     class="dropdown-content"
                 >
-                    <a (click)="toggleDropdown()">
+                    <a (click)="toggleDropdown($event)">
                         <img
                             class="pngIcon"
                             src="../../../../assets/chart.png"
@@ -74,7 +74,7 @@
                 [ngClass]="{ show: showTableDropdown }"
                 class="dropdown-content"
             >
-                <a (click)="handleTableClick($event)">
+            <a (click)="handleTableClick($event)">
                     <img
                         class="pngIcon"
                         src="../../../../assets/clock.png"

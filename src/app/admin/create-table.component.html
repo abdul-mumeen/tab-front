@@ -17,9 +17,9 @@
             <tr>
               <th>Column Name</th>
               <th>Data Type</th>
-              <th>Actions</th> 
+              <th>Actions</th>
             </tr>
-            <tr formArrayName="columns" *ngFor="let column of tableForm.get('columns').controls;
+            <tr formArrayName="columns" *ngFor="let column of columns.controls;
               let i=index;let odd=odd;let even=even;" [ngClass]='{"oddRow":odd, "evenRow":even}'>
               <td (dblclick)="showInput(input, i)" [formGroupName]="i">
                 <input #input class="inputHidden2" (blur)="displayInput[i]=true"
