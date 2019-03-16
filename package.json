@@ -24,6 +24,7 @@
     "@angular/router": "^7.2.4",
     "@handsontable-pro/angular": "^3.0.0",
     "core-js": "^2.5.4",
+    "express": "^4.16.4",
     "firebase": "^5.8.2",
     "handsontable": "^6.2.2",
     "handsontable-pro": "^6.2.2",

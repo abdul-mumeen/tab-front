@@ -21,5 +21,8 @@ RUN npm install -g @angular/cli@1.7.1
 # add app
 COPY . /usr/src/app
 
+# CMD ng serve --host 0.0.0.0
+RUN ng build
+
 # start app
-CMD ng serve --host 0.0.0.0
+CMD node server.js
