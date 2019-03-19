@@ -47,7 +47,6 @@ export class AddComponent implements OnInit, OnDestroy {
     ngOnDestroy() {}
 
     resetTableColumns(columns) {
-        'use strict';
         const obj = {};
         this.dataset = [];
 
@@ -88,7 +87,6 @@ export class AddComponent implements OnInit, OnDestroy {
             }
             gg.push(row);
         });
-        let test = '';
 
         try {
             await this.dbService.addEntries({ rows: gg }).toPromise();
@@ -101,7 +99,6 @@ export class AddComponent implements OnInit, OnDestroy {
                 verticalPosition: 'top',
             });
             this.resetTableColumns(this.columns);
-            console.log(tableau.extensions, 'data');
             const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
             datasources[0].refreshAsync();
         } catch (error) {
