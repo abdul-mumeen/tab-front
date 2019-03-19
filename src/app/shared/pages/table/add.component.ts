@@ -8,6 +8,8 @@ import { MatSnackBar } from '@angular/material';
 import * as Handsontable from 'handsontable';
 import { HotTableRegisterer } from '@handsontable-pro/angular';
 
+declare var tableau: any;
+
 @Component({
     templateUrl: 'add.component.html',
     styleUrls: ['table.component.scss'],
@@ -34,6 +36,7 @@ export class AddComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private snackBar: MatSnackBar,
     ) {
+        tableau.extensions.initializeAsync();
         this.columns = this.dbService.getCurrentTableDef();
         this.resetTableColumns(this.columns);
     }
@@ -96,16 +99,13 @@ export class AddComponent implements OnInit, OnDestroy {
                 verticalPosition: 'top',
             });
             this.resetTableColumns(this.columns);
+            const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
+            datasources[0].refreshAsync();
         } catch (error) {
-            console.log(error, 'error');
-            this.snackBar.open(
-                'An error occur, kindly check the record and try again',
-                'dismiss',
-                {
-                    duration: 5000,
-                    verticalPosition: 'top',
-                },
-            );
+            this.snackBar.open(error, 'dismiss', {
+                duration: 5000,
+                verticalPosition: 'top',
+            });
         }
     }
 

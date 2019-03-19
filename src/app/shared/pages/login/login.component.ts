@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material';
 export class LoginComponent implements OnInit, OnDestroy {
     loginForm: any;
     loading: boolean = false;
+    // tab = new tableau();
 
     constructor(
         private loc: Location,
@@ -20,8 +21,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         private router: Router,
     ) {
         this.loginForm = new FormGroup({
-            email: new FormControl({value: '', disabled: this.loading}),
-            password: new FormControl({value: '', disabled: this.loading}),
+            email: new FormControl({ value: '', disabled: this.loading }),
+            password: new FormControl({ value: '', disabled: this.loading }),
         });
     }
 
@@ -40,10 +41,10 @@ export class LoginComponent implements OnInit, OnDestroy {
             );
             this.router.navigate(['/dashboard']);
         } catch {
-          this.snackBar.open(
-            'Unable to verify email and password combination',
-            'Close'
-          )
+            this.snackBar.open(
+                'Unable to verify email and password combination',
+                'Close',
+            );
         } finally {
             this.loading = false;
         }
