@@ -12,7 +12,6 @@ import { MatSnackBar } from '@angular/material';
 export class LoginComponent implements OnInit, OnDestroy {
     loginForm: any;
     loading: boolean = false;
-    // tab = new tableau();
 
     constructor(
         private loc: Location,

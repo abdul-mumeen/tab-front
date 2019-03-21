@@ -26,7 +26,7 @@ export class DashboardRedirect implements OnInit {
                 navTo = '/admin';
                 break;
             case 'user':
-                navTo = '/user';
+                navTo = '/tables';
                 break;
             default:
                 navTo = '/login';

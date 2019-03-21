@@ -33,8 +33,8 @@ export class TablesComponent implements OnInit, OnDestroy {
 
     async ngOnInit() {
         this.loading = true;
-        const result = await this.dbService.getTables().toPromise();
-        this.tables = !!result ? result.data.tables : [];
+        const tables = await this.dbService.getTabless();
+        this.tables = tables || [];
         this.loading = false;
         // this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
         // try {
