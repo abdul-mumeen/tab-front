@@ -6,9 +6,8 @@ import {
     LogoutComponent,
     SignupComponent,
     DashboardRedirect,
-    UserComponent,
-    TableComponent,
-    AddComponent,
+    EditComponent,
+    TablesComponent,
 } from './shared/index';
 
 const appRoutes: Routes = [
@@ -18,17 +17,16 @@ const appRoutes: Routes = [
         canActivate: [AuthGuard],
     },
     {
-        path: 'tables/:name',
-        component: TableComponent,
+        path: 'tables',
+        component: TablesComponent,
         canActivate: [AuthGuard],
     },
     {
-        path: 'tables/:name/add',
-        component: AddComponent,
+        path: 'tables/:name',
+        component: EditComponent,
         canActivate: [AuthGuard],
     },
     { path: 'landing', component: LandingComponent },
-    { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
     {
         path: 'admin',
         loadChildren: './admin/admin.module#AdminModule',

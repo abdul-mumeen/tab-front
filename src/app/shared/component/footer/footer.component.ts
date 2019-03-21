@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
@@ -9,26 +9,29 @@ import { MatSnackBar } from '@angular/material';
     styleUrls: ['footer.component.scss'],
 })
 export class FooterComponent {
-  loading:boolean = false;
-  
-  constructor(
-      private authService: AuthService,
-      private snackBar: MatSnackBar,
-      private router: Router,
-  ) {}
+    @Input()
+    leftButtonText: string = 'Home';
+    @Output()
+    leftButtonClick = new EventEmitter<any>();
 
-  async goHome() {
-      this.loading = true;
-      try {
-          await this.authService.logout();
-          this.router.navigate(['/landing']);
-      } catch {
-        this.snackBar.open(
-          'Logout failed!',
-          'Close'
-        )
-      } finally {
-          this.loading = false;
-      }
-  }
+    loading: boolean = false;
+
+    constructor(
+        private authService: AuthService,
+        private snackBar: MatSnackBar,
+        private router: Router,
+    ) {}
+
+    async goHome() {
+        if (this.leftButtonText !== 'Home') {
+            this.leftButtonClick.emit();
+            return;
+        }
+
+        if (this.authService.user.role === 'admin') {
+            this.router.navigate(['/admin']);
+        } else {
+            this.router.navigate(['/tables']);
+        }
+    }
 }

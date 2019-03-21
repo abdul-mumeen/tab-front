@@ -37,11 +37,11 @@ export class DBService {
 
     async getTabless() {
         // Todo: handle errors
-        const data = await this.http.get(`${this.apiUrl}/table`).toPromise()[
-            'tables'
-        ];
-        this.tables = data.tables;
-        return this.tables;
+        const response = await this.http
+            .get(`${this.apiUrl}/table`)
+            .toPromise();
+        this.tables = response['data']['tables'];
+        return this.tables.map(table => table['name']);
     }
 
     async getTableInfo(tableName: string) {

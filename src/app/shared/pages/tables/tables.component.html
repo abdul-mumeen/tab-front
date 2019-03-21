@@ -1,14 +1,13 @@
 <div class="container">
-    <div class="page-box">
-        <div class="nav-header">
-            <i class="material-icons" (click)="back()">arrow_back_ios</i>
-        </div>
+    <div class="page-box page-box-padding">
+        <page-header [showBackButton]="false"></page-header>
         <div class="content">
             <div class="dropdown">
                 <button
                     id="dropdown"
                     (click)="toggleDropdown($event)"
                     class="btn dropdown"
+                    [disabled]="!tables.length"
                 >
                     <img
                         class="pngIcon"
@@ -16,7 +15,7 @@
                         alt=""
                     />
                     <span class="buttonLabel">
-                        Choose an action
+                        Edit a table
                     </span>
                     <mat-icon *ngIf="!showDropdownContent" style="float:right;"
                         >expand_more</mat-icon
@@ -36,18 +35,22 @@
                             alt=""
                         />
                         <span class="buttonLabel">
-                            Choose an action
+                            Edit a table
                         </span>
                         <mat-icon style="float:right;">expand_less</mat-icon>
                     </a>
-                    <a href="#" (click)="handleClick($event, 'add')"
-                        >Add a new record</a
+                    <a
+                        *ngFor="let table of tables"
+                        href="#"
+                        (click)="handleClick($event, table)"
+                        >{{ table }}</a
                     >
-                    <a href="#">Edit an existing record</a>
-                    <a href="#">Upload a file input</a>
                 </div>
             </div>
         </div>
-        <page-footer></page-footer>
+        <page-footer
+            [leftButtonText]="'Log Out'"
+            (leftButtonClick)="logout()"
+        ></page-footer>
     </div>
 </div>

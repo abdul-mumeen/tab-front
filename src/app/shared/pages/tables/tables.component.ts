@@ -5,15 +5,17 @@ import { DBService } from '../../../services/db.service';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
-    templateUrl: 'table.component.html',
-    styleUrls: ['table.component.scss'],
+    templateUrl: 'tables.component.html',
+    styleUrls: ['tables.component.scss'],
 })
-export class TableComponent implements OnInit, OnDestroy {
+export class TablesComponent implements OnInit, OnDestroy {
     loading: boolean = false;
     showDropdownContent = false;
-    tableName: string;
-    tableMetadata: any;
-    error: boolean = false;
+    loadingTables: boolean = false;
+    tables: string[] = [];
+    // tableName: string;
+    // tableMetadata: any;
+    // error: boolean = false;
 
     @HostListener('document:click', ['$event'])
     onClick(event) {
@@ -29,14 +31,10 @@ export class TableComponent implements OnInit, OnDestroy {
     ) {}
 
     async ngOnInit() {
-        this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
-        try {
-            this.tableMetadata = await this.dbService.getTableInfo(
-                this.tableName,
-            );
-        } catch {
-            this.error = true;
-        }
+        this.loading = true;
+        const tables = await this.dbService.getTabless();
+        this.tables = tables || [];
+        this.loading = false;
     }
     ngOnDestroy() {}
 
@@ -56,15 +54,9 @@ export class TableComponent implements OnInit, OnDestroy {
         }
     }
 
-    handleClick(event: any, action: string) {
+    handleClick(event: any, tableName: string) {
         event.preventDefault();
-        switch (action) {
-            case 'add':
-                this.router.navigate([`tables/${this.tableName}/add`]);
-                break;
-            default:
-                console.log('error');
-        }
+        this.router.navigate([`tables/${tableName}`]);
     }
 
     back() {

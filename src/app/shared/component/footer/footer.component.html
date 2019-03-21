@@ -8,9 +8,9 @@
             (click)="goHome()"
             fill="outline"
         >
-            <mat-icon>home</mat-icon>
+            <mat-icon *ngIf="leftButtonText === 'Home'">home</mat-icon>
             <span style="vertical-align:super;">
-              Home
+                {{ leftButtonText }}
             </span>
         </button>
     </span>

@@ -93,7 +93,10 @@
             </div>
         </div>
         <div style="margin-top:28px">
-            <page-footer></page-footer>
+            <page-footer
+                [leftButtonText]="'Log Out'"
+                (leftButtonClick)="logout()"
+            ></page-footer>
         </div>
     </div>
 </div>
