@@ -11,7 +11,6 @@ import { AuthService } from '../../../services/auth.service';
 export class TablesComponent implements OnInit, OnDestroy {
     loading: boolean = false;
     showDropdownContent = false;
-    selectPlaceholder: string = 'No table available';
     loadingTables: boolean = false;
     tables: string[] = [];
     // tableName: string;

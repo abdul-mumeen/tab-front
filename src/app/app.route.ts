@@ -6,7 +6,7 @@ import {
     LogoutComponent,
     SignupComponent,
     DashboardRedirect,
-    UserComponent,
+    EditComponent,
     TablesComponent,
 } from './shared/index';
 
@@ -23,11 +23,10 @@ const appRoutes: Routes = [
     },
     {
         path: 'tables/:name',
-        component: TablesComponent,
+        component: EditComponent,
         canActivate: [AuthGuard],
     },
     { path: 'landing', component: LandingComponent },
-    { path: 'user', component: UserComponent, canActivate: [AuthGuard] },
     {
         path: 'admin',
         loadChildren: './admin/admin.module#AdminModule',

@@ -11,10 +11,10 @@ import { HotTableRegisterer } from '@handsontable-pro/angular';
 declare var tableau: any;
 
 @Component({
-    templateUrl: 'add.component.html',
-    styleUrls: ['table.component.scss'],
+    templateUrl: 'edit.component.html',
+    styleUrls: ['edit.component.scss'],
 })
-export class AddComponent implements OnInit, OnDestroy {
+export class EditComponent implements OnInit, OnDestroy {
     loading: boolean = false;
     columns: Array<{}> = [];
     tableName: string;
@@ -25,6 +25,8 @@ export class AddComponent implements OnInit, OnDestroy {
         colHeaders: true,
     };
     columnHeaders: any[] = [];
+    tableMetadata: any;
+    error: boolean = false;
 
     dataset: any[] = [];
 
@@ -37,12 +39,19 @@ export class AddComponent implements OnInit, OnDestroy {
         private snackBar: MatSnackBar,
     ) {
         tableau.extensions.initializeAsync();
-        this.columns = this.dbService.getCurrentTableDef();
-        this.resetTableColumns(this.columns);
     }
 
     async ngOnInit() {
         this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
+        try {
+            this.tableMetadata = await this.dbService.getTableInfo(
+                this.tableName,
+            );
+        } catch {
+            this.error = true;
+        }
+        this.columns = this.dbService.getCurrentTableDef();
+        this.resetTableColumns(this.columns);
     }
     ngOnDestroy() {}
 

@@ -26,7 +26,7 @@ import {
     LandingComponent,
     LoginComponent,
     SignupComponent,
-    UserComponent,
+    EditComponent,
     TablesComponent,
 } from './shared/index';
 
@@ -38,7 +38,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         LandingComponent,
         LoginComponent,
         SignupComponent,
-        UserComponent,
+        EditComponent,
         TablesComponent,
     ],
     imports: [
