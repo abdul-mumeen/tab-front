@@ -27,8 +27,7 @@ import {
     LoginComponent,
     SignupComponent,
     UserComponent,
-    TableComponent,
-    AddComponent,
+    TablesComponent,
 } from './shared/index';
 
 import { AuthGuard, AdminGuard } from './guards/index';
@@ -40,8 +39,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         LoginComponent,
         SignupComponent,
         UserComponent,
-        TableComponent,
-        AddComponent,
+        TablesComponent,
     ],
     imports: [
         BrowserAnimationsModule,
