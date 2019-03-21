@@ -35,14 +35,6 @@ export class TablesComponent implements OnInit, OnDestroy {
         const tables = await this.dbService.getTabless();
         this.tables = tables || [];
         this.loading = false;
-        // this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
-        // try {
-        //     this.tableMetadata = await this.dbService.getTableInfo(
-        //         this.tableName,
-        //     );
-        // } catch {
-        //     this.error = true;
-        // }
     }
     ngOnDestroy() {}
 

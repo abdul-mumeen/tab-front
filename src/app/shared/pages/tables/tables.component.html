@@ -48,6 +48,9 @@
                 </div>
             </div>
         </div>
-        <page-footer></page-footer>
+        <page-footer
+            [leftButtonText]="'Log Out'"
+            (leftButtonClick)="logout()"
+        ></page-footer>
     </div>
 </div>
