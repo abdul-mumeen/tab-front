@@ -1,7 +1,14 @@
 <div class="container">
-    <div class="page-box">
-        <div class="nav-header">
-            <i class="material-icons" (click)="back()">arrow_back_ios</i>
+    <div class="page-box page-box-padding">
+        <page-header [showBackButton]="false"></page-header>
+        <button class="btn dropdown">
+            <img class="pngIcon" src="../../../../assets/table.png" alt="" />
+            <span class="buttonLabel">
+                {{ tableName }}
+            </span>
+        </button>
+        <div class="edit-ctas">
+            ctas
         </div>
         <div class="table-content">
             <hot-table
@@ -12,7 +19,7 @@
                 class="tableStyle"
             >
             </hot-table>
-            <div style="width:100%">
+            <div style="width:80%">
                 <button
                     class="btn pink"
                     type="button"
@@ -25,18 +32,18 @@
                         style="color:#FFFFFF"
                         class="buttonLabel"
                     >
-                        Submit
+                        Save
                     </div>
                     <div
                         *ngIf="loading"
                         style="color:#FFFFFF"
                         class="buttonLabel"
                     >
-                        submitting...
+                        Saving...
                     </div>
                 </button>
             </div>
         </div>
-        <page-footer></page-footer>
+        <page-footer style="width:80%"></page-footer>
     </div>
 </div>
