@@ -55,13 +55,9 @@
                 </span>
             </button>
             <button (click)="handleTableClick($event)" class="btn dropdown">
-                <img
-                    class="pngIcon"
-                    src="../../../../assets/clock.png"
-                    alt=""
-                />
+                <img class="pngIcon" src="../../../../assets/edit.png" alt="" />
                 <span class="buttonLabel">
-                    Connect to a Table
+                    Edit a Table
                 </span>
                 <mat-icon *ngIf="showTableDropdown" style="float:right;"
                     >expand_less</mat-icon
@@ -77,11 +73,11 @@
                 <a (click)="handleTableClick($event)">
                     <img
                         class="pngIcon"
-                        src="../../../../assets/clock.png"
+                        src="../../../../assets/edit.png"
                         alt=""
                     />
                     <span class="buttonLabel">
-                        Connect to a Table
+                        Edit a Table
                     </span>
                     <mat-icon style="float:right;">expand_less</mat-icon>
                 </a>
