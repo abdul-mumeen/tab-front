@@ -16,7 +16,6 @@ export class DashboardRedirect implements OnInit {
     ngOnInit() {
         let navTo: string = '/landing';
         let role: string = '';
-
         if (this.authService.userDetails && this.authService.userDetails.role) {
             role = this.authService.userDetails.role;
         }

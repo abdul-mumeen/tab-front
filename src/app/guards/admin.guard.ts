@@ -26,7 +26,6 @@ export class AdminGuard implements CanActivate {
 
     async isAdmin(user) {
         if (user) {
-            console.log(user, 'new user');
             const userDocRef = await this.authService.getDoc(
                 `users/${user.uid}`,
             );

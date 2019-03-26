@@ -42,11 +42,14 @@ export class AuthService {
                             `users/${user.uid}`,
                         );
                         const userDoc = userDocRef.data();
-                        return {
-                            ...user,
-                            role: userDoc.role || '',
-                            name: userDoc.name || '',
-                        };
+                        if (userDoc) {
+                            return {
+                                ...user,
+                                role: userDoc.role || '',
+                                name: userDoc.name || '',
+                            };
+                        }
+                        return user;
                     } else {
                         return null;
                     }
@@ -60,9 +63,14 @@ export class AuthService {
 
     async registerEmailUser(name: string, email: string, password: string) {
         try {
-            await firebase
+            const userCred = await firebase
                 .auth()
                 .createUserWithEmailAndPassword(email, password);
+            this.updateUser({
+                ...userCred.user,
+                role: 'user',
+                name: name,
+            });
             await this.setDoc(`users/${this.userDetails.uid}`, {
                 name,
                 email,
@@ -131,14 +139,25 @@ export class AuthService {
 
     async loginEmailUser(email: string, password: string) {
         try {
-            await firebase.auth().signInWithEmailAndPassword(email, password);
+            const userCred = await firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password);
+            const userDocRef = await this.getDoc(`users/${userCred.user.uid}`);
+            const userDoc = userDocRef.data();
+            this.updateUser({
+                ...userCred.user,
+                role: userDoc.role || '',
+                name: userDoc.name || '',
+            });
             return Promise.resolve();
         } catch (error) {
             return Promise.reject(error);
         }
     }
 
-    public updateUser(meChanges: any) {}
+    public updateUser(user: UserModel) {
+        this.user.next(user);
+    }
 
     private loadUser() {
         // load user info
