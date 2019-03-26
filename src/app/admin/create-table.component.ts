@@ -85,21 +85,20 @@ export class CreateTables implements OnInit {
                 result => {
                     this.snackBar.open(
                         `Table ${values.name} created successfully`,
-                        'Close',
+                        'Dismiss',
                     );
                     this.tableForm.reset();
                     this.loading = false;
                 },
                 error => {
-                    this.snackBar.open(`Transaction failed`, 'Close');
+                    this.snackBar.open(`Transaction failed`, 'Dismiss');
                     this.loading = false;
-                    console.log(error);
                 },
             );
         } else {
             this.snackBar.open(
                 'Invalid form! All fields are required',
-                'Close',
+                'Dismiss',
             );
             this.loading = false;
         }

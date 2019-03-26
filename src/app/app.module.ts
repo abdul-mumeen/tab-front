@@ -67,7 +67,11 @@ import { AuthGuard, AdminGuard } from './guards/index';
         // { provide: Window, useValue: window },
         {
             provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
-            useValue: { duration: 3000, panelClass: 'snackBarLength' },
+            useValue: {
+                duration: 5000,
+                panelClass: 'snackBarLength',
+                verticalPosition: 'top',
+            },
         },
     ],
     bootstrap: [AppComponent],
