@@ -1,14 +1,43 @@
 <div class="container">
     <div class="page-box page-box-padding">
         <page-header [showBackButton]="false"></page-header>
-        <button class="btn dropdown">
+        <div class="btn dropdown">
             <img class="pngIcon" src="../../../../assets/table.png" alt="" />
             <span class="buttonLabel">
                 {{ tableName }}
             </span>
-        </button>
+        </div>
         <div class="edit-ctas">
-            ctas
+            <button class="edit-button">
+                <img
+                    class="pngIcon"
+                    src="../../../../assets/table.png"
+                    alt=""
+                />
+                <span class="edit-button-label">
+                    Edit
+                </span>
+            </button>
+            <button class="edit-button">
+                <img
+                    class="pngIcon"
+                    src="../../../../assets/table.png"
+                    alt=""
+                />
+                <span class="edit-button-label">
+                    Add Row
+                </span>
+            </button>
+            <button class="edit-button">
+                <img
+                    class="pngIcon"
+                    src="../../../../assets/table.png"
+                    alt=""
+                />
+                <span class="edit-button-label">
+                    Upload File
+                </span>
+            </button>
         </div>
         <div class="table-content">
             <hot-table

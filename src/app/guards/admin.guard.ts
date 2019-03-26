@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { concatMap, take } from 'rxjs/operators';
 import {
     Router,
     CanActivate,
@@ -15,27 +15,30 @@ export class AdminGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         // check role
-        return this.authService.checkUser().pipe(
-            map(result => {
-                let role: string = '';
-                if (result) {
-                    role = result.role;
-                }
-                if (role === 'admin') {
-                    return true;
-                } else {
-                    if (role !== '') {
-                        // they have a different role so redirect them back to root so they
-                        // don't end up in a loop going to login over and over
-                        this.router.navigate(['/user']);
-                    } else {
-                        this.router.navigate(['/login'], {
-                            queryParams: { returnUrl: state.url },
-                        });
-                    }
-                    return false;
-                }
-            }),
-        );
+        return this.authService
+            .checkUser()
+            .pipe(
+                take(1),
+                concatMap(user => this.isAdmin(user)),
+            )
+            .toPromise();
+    }
+
+    async isAdmin(user) {
+        if (user) {
+            console.log(user, 'new user');
+            const userDocRef = await this.authService.getDoc(
+                `users/${user.uid}`,
+            );
+            const userDoc = userDocRef.data();
+            if (userDoc.role === 'admin') {
+                return true;
+            } else {
+                this.router.navigate(['/tables']);
+                return false;
+            }
+        }
+        this.router.navigate(['/login']);
+        return false;
     }
 }

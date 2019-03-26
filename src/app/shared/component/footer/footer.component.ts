@@ -28,7 +28,7 @@ export class FooterComponent {
             return;
         }
 
-        if (this.authService.user.role === 'admin') {
+        if (this.authService.userDetails.role === 'admin') {
             this.router.navigate(['/admin']);
         } else {
             this.router.navigate(['/tables']);

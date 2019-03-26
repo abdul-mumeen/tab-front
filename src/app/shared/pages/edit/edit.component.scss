@@ -4,13 +4,14 @@
     margin: 0 12px;
 }
 
-.buttonLabel {
+.edit-button-label {
     height: 18px;
     font-family: 'Open Sans';
     color: #8f8f8f;
     font-size: 14px;
     line-height: 18px;
     vertical-align: super;
+    font-weight: 600;
 }
 
 .btn.dropdown {
@@ -46,6 +47,24 @@
 
 .edit-ctas {
     width: 100%;
-    border: solid 2px green;
     margin: 15px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .edit-button {
+        background-color: transparent;
+        border: 0px;
+        text-align: center;
+        vertical-align: baseline;
+    }
+}
+
+.buttonLabel {
+    height: 18px;
+    font-family: 'Open Sans';
+    color: #8f8f8f;
+    font-size: 14px;
+    line-height: 18px;
+    vertical-align: super;
 }

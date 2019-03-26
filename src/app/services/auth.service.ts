@@ -2,10 +2,17 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { User } from 'firebase';
 
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, of } from 'rxjs';
-import { map, catchError, exhaustMap, flatMap } from 'rxjs/operators';
+import {
+    map,
+    catchError,
+    exhaustMap,
+    flatMap,
+    switchMap,
+} from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { UserModel } from '../../models/models';
 
@@ -13,7 +20,7 @@ import { UserModel } from '../../models/models';
 export class AuthService {
     public apiUrl: string = environment.apiRoot;
 
-    public user: UserModel;
+    public user: BehaviorSubject<UserModel> = new BehaviorSubject(null);
     public LoggedIn: any;
     private token: string;
 
@@ -27,9 +34,28 @@ export class AuthService {
         // this.token = this.getToken();
         this.LoggedIn = new BehaviorSubject(null); // maintian LoggedIn info
 
-        this.afAuth.user.subscribe(user => {
-            this.user = user;
-        });
+        this.afAuth.user
+            .pipe(
+                map(async user => {
+                    if (user) {
+                        const userDocRef = await this.getDoc(
+                            `users/${user.uid}`,
+                        );
+                        const userDoc = userDocRef.data();
+                        return {
+                            ...user,
+                            role: userDoc.role || '',
+                            name: userDoc.name || '',
+                        };
+                    } else {
+                        return null;
+                    }
+                }),
+            )
+            .subscribe(async response => {
+                const user = await response;
+                this.user.next(user);
+            });
     }
 
     async registerEmailUser(name: string, email: string, password: string) {
@@ -37,12 +63,11 @@ export class AuthService {
             await firebase
                 .auth()
                 .createUserWithEmailAndPassword(email, password);
-            await this.setDoc(`users/${this.user.uid}`, {
+            await this.setDoc(`users/${this.userDetails.uid}`, {
                 name,
                 email,
                 role: 'user',
             });
-            this.user.role = 'user';
             return Promise.resolve();
         } catch (error) {
             return Promise.reject(error);
@@ -87,9 +112,9 @@ export class AuthService {
         return headers;
     }
 
-    public checkUser(): Observable<UserModel> {
+    public checkUser(): Observable<any> {
         // this is used in _guards to check if we have already got user info in session, if not it will load from firebase
-        return of(this.user);
+        return this.afAuth.user;
     }
 
     public resetUser() {
@@ -100,15 +125,13 @@ export class AuthService {
         return this.afAuth.auth.signOut();
     }
 
+    get userDetails() {
+        return this.user.value;
+    }
+
     async loginEmailUser(email: string, password: string) {
         try {
-            await firebase
-                .auth()
-                .signInWithEmailAndPassword(email, password);
-            const userDocRef = await this.getDoc(`users/${this.user.uid}`);
-            const userDoc = userDocRef.data();
-            this.user.role = userDoc.role || '';
-            this.user.name = userDoc.name || '';
+            await firebase.auth().signInWithEmailAndPassword(email, password);
             return Promise.resolve();
         } catch (error) {
             return Promise.reject(error);
