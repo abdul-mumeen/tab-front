@@ -1,25 +1,27 @@
 .pngIcon {
     width: 20px;
     height: 20px;
-    margin: 0 12px;
+    margin: 0 10px;
 }
 
 .edit-button-label {
     height: 18px;
     font-family: 'Open Sans';
     color: #8f8f8f;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 18px;
-    vertical-align: super;
-    font-weight: 600;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 .btn.dropdown {
-    color: #dcdcdc;
+    color: #8f8f8f;
     text-align: left;
-    border: 1px solid #dcdcdc !important;
-    padding-left: 10px;
+    border: 1.5px solid #514f5d !important;
+    padding: 10px;
     width: 80%;
+    height: 20px;
+    cursor: default;
 }
 
 .table-content {
@@ -56,7 +58,17 @@
         background-color: transparent;
         border: 0px;
         text-align: center;
-        vertical-align: baseline;
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+    }
+
+    .edit {
+        color: #a93f55;
+    }
+
+    .add {
+        color: #0072bc;
     }
 }
 
