@@ -103,18 +103,12 @@ export class EditComponent implements OnInit, OnDestroy {
             const message = `${
                 gg.length
             } record${sOrNoS} been successfully added`;
-            this.snackBar.open(message, 'dismiss', {
-                duration: 5000,
-                verticalPosition: 'top',
-            });
+            this.snackBar.open(message, 'Dismiss');
             this.resetTableColumns(this.columns);
             const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
             datasources[0].refreshAsync();
         } catch (error) {
-            this.snackBar.open(error, 'dismiss', {
-                duration: 5000,
-                verticalPosition: 'top',
-            });
+            this.snackBar.open(error, 'Dismiss');
         }
     }
 

@@ -33,7 +33,7 @@ export class AdminComponent implements OnInit {
                 this.tables = result.data.tables;
             },
             error => {
-                this.snackBar.open('Error getting tables', 'Close');
+                this.snackBar.open('Error getting tables', 'Dismiss');
             },
         );
     }

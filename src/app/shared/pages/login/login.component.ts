@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         } catch {
             this.snackBar.open(
                 'Unable to verify email and password combination',
-                'Close',
+                'Dismiss',
             );
         } finally {
             this.loading = false;

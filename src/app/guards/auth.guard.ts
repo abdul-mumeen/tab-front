@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { concatMap, take } from 'rxjs/operators';
 import {
     Router,
     CanActivate,
@@ -14,17 +14,23 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router, private authService: AuthService) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        return this.authService.checkUser().pipe(
-            map(result => {
-                if (result) {
-                    return true;
-                } else {
-                    this.router.navigate(['/landing'], {
-                        queryParams: { returnUrl: state.url },
-                    });
-                    return false;
-                }
-            }),
-        );
+        return this.authService
+            .checkUser()
+            .pipe(
+                take(1),
+                concatMap(user => this.isLoggedIn(user, state)),
+            )
+            .toPromise();
+    }
+
+    isLoggedIn(user, state) {
+        if (user) {
+            return Promise.resolve(true);
+        } else {
+            this.router.navigate(['/landing'], {
+                queryParams: { returnUrl: state.url },
+            });
+            return Promise.resolve(false);
+        }
     }
 }

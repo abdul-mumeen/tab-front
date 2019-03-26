@@ -20,9 +20,9 @@ export class SignupComponent implements OnInit, OnDestroy {
         private router: Router,
     ) {
         this.signupForm = new FormGroup({
-            name: new FormControl({value: '', disabled: this.loading}),
-            email: new FormControl({value: '', disabled: this.loading}),
-            password: new FormControl({value: '', disabled: this.loading}),
+            name: new FormControl({ value: '', disabled: this.loading }),
+            email: new FormControl({ value: '', disabled: this.loading }),
+            password: new FormControl({ value: '', disabled: this.loading }),
         });
     }
 
@@ -42,10 +42,7 @@ export class SignupComponent implements OnInit, OnDestroy {
             );
             this.router.navigate(['/dashboard']);
         } catch (error) {
-          this.snackBar.open(
-            'Registration failed!',
-            'Close'
-          )
+            this.snackBar.open('Registration failed!', 'Dismiss');
         } finally {
             this.loading = false;
         }
