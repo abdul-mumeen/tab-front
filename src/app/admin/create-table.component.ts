@@ -23,6 +23,7 @@ export class CreateTables implements OnInit {
     loading: boolean = false;
     displayInput: any = { 0: true };
     columns: any;
+
     get formArray() {
         return <FormArray>this.tableForm.get('columns');
     }

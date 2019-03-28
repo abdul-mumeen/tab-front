@@ -1,82 +1,86 @@
 .title {
-	height: 40px;
-	width: 288px;
-	border: 1.5px solid #514F5D;
-	border-radius: 100px;
-  margin: 0 auto 9px auto;
+    height: 40px;
+    width: 288px;
+    border: 1.5px solid #514f5d;
+    border-radius: 100px;
+    margin: 0 auto 9px auto;
 }
 
 .structure {
-	height: 18px;
-	width: 100px;
-	color: #433F5B;
-	font-family: "Chivo Bold";
-	font-size: 16px;
-	line-height: 18px;
-  margin:15px auto
+    height: 18px;
+    width: 100px;
+    color: #433f5b;
+    font-family: 'Chivo Bold';
+    font-size: 16px;
+    line-height: 18px;
+    margin: 15px auto;
+    font-weight: 600;
 }
 
 table {
-	width: 326px;
-	text-align: center;
+    width: 326px;
+    text-align: center;
 }
 
 th {
-	height: 15px;
-	color: #FFFFFF;
-	font-family: "Open Sans";
-	font-weight: 600;
-	line-height: 14px;
+    height: 15px;
+    color: #ffffff;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    line-height: 14px;
 }
 
-table, th, td {
-  border-collapse: collapse;
+table,
+th,
+td {
+    border-collapse: collapse;
 }
 
 tr:first-child {
-	height: 31.27px;
-	width: 325px;
-	opacity: 0.95;
-	background-color: #403C58;
+    height: 31.27px;
+    width: 325px;
+    opacity: 0.95;
+    background-color: #403c58;
 }
 
-td:first-child{
-	width: 150px;
+td:first-child {
+    width: 150px;
 }
 
 .titleText {
-	height: 18px;
-	width: 94px;
-	color: #8F8F8F;
-	font-family: "Open Sans";
-	font-size: 14px;
-	line-height: 18px;
-  top: 5px;
-  position: relative;
-}
-.inputHidden {
-  border: none;
-  outline: none;
-  height: 18px;
-  width: 220px;
-  color: #8F8F8F;
-  font-family: "Open Sans";
-  font-size: 14px;
-  line-height: 18px;
-  top: 5px;
-  position: relative;
-	width: 148px;
+    height: 18px;
+    width: 94px;
+    color: #8f8f8f;
+    font-family: 'Open Sans';
+    font-size: 14px;
+    line-height: 18px;
+    top: 5px;
+    position: relative;
 }
 
-.inputIcon{
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
-  margin-left: 24px;
-  margin-top: 0;
-  margin-bottom: 0;
-  top: 10px;
-  position: relative;
+.inputHidden {
+    border: none;
+    outline: none;
+    height: 18px;
+    width: 220px;
+    color: #8f8f8f;
+    font-family: 'Open Sans';
+    font-size: 14px;
+    line-height: 18px;
+    top: 5px;
+    position: relative;
+    width: 148px;
+}
+
+.inputIcon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    margin-left: 24px;
+    margin-top: 0;
+    margin-bottom: 0;
+    top: 10px;
+    position: relative;
 }
 
 .pngIcon {
@@ -86,16 +90,16 @@ td:first-child{
 }
 
 .plus {
-	cursor: pointer;
-	font-size: 14px;
-	position: relative;
-	top: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    position: relative;
+    top: 5px;
 }
 
 .buttonLabel.plusLabel {
-	color: #FFFFFF;
-	position: relative;
-	top: 3px;
+    color: #ffffff;
+    position: relative;
+    top: 3px;
 }
 
 .buttonLabel {
@@ -106,62 +110,62 @@ td:first-child{
     line-height: 18px;
 }
 
-.showInput{
-	font-family: 'Open Sans';
-  font-size: 16px;
-  color: #8f8f8f;
+.showInput {
+    font-family: 'Open Sans';
+    font-size: 16px;
+    color: #8f8f8f;
 }
 
 .inputHidden2 {
-	width: 148px;
-	height: 34px;
-  border-width: 0;
-  font-size: 16px;
-  text-align: center;
-  font-family: 'Open Sans';
-  color: #8f8f8f;
+    width: 148px;
+    height: 34px;
+    border-width: 0;
+    font-size: 16px;
+    text-align: center;
+    font-family: 'Open Sans';
+    color: #8f8f8f;
 }
 
 .inputHidden2:focus {
-  outline: 0;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, .5);
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }
 
 .oddRow {
-	background-color: #DCDCDC
+    background-color: #dcdcdc;
 }
 
 .evenRow {
-	background-color: #FFFFFF
+    background-color: #ffffff;
 }
 
 .darkBlue {
-	background-color: #403C58;
-	color: #FFFFFF;
+    background-color: #403c58;
+    color: #ffffff;
 }
 
-.btn{
-	width: 288px;
-	display: block;
-  margin: 0 auto;
+.btn {
+    width: 288px;
+    display: block;
+    margin: 0 auto;
 }
 
 .btn.dropdown {
     color: #dcdcdc;
     text-align: left;
-		width: 123px;
-		padding: 0;
-		width: inherit;
+    width: 123px;
+    padding: 0;
+    width: inherit;
 }
 
 .btn2 {
-	font-family: "Open Sans";
-  width: 100px;
-  height: 30px;
-	border: 1.5px solid #514F5D;
-  border-radius: 100px;
-	float: right;
-	margin: 10px 0;
+    font-family: 'Open Sans';
+    width: 100px;
+    height: 30px;
+    border: 1.5px solid #514f5d;
+    border-radius: 100px;
+    float: right;
+    margin: 10px 0;
 }
 
 .dropdown-content {

@@ -2,105 +2,183 @@
     <div class="page-box">
         <page-header [showBackButton]="true"></page-header>
         <form class="form" (ngSubmit)="createTable()" [formGroup]="tableForm">
-          <div class="title">
-            <img class="inputIcon" src="../../../../assets/table.png" alt="">
-            <input
-                class="inputHidden"
-                name="name"
-                formControlName="name"
-                placeholder="Table name"
-                autocomplete="off"
-            />
-          </div>
-          <div class="structure">Table Structure</div>
-          <table>
-            <tr>
-              <th>Column Name</th>
-              <th>Data Type</th>
-              <th>Actions</th>
-            </tr>
-            <tr formArrayName="columns" *ngFor="let column of columns.controls;
-              let i=index;let odd=odd;let even=even;" [ngClass]='{"oddRow":odd, "evenRow":even}'>
-              <td (dblclick)="showInput(input, i)" [formGroupName]="i">
-                <input #input class="inputHidden2" (blur)="displayInput[i]=true"
-                  type="text" formControlName="name" [hidden]="displayInput[i]"
-                  [ngClass]='{"oddRow":odd, "evenRow":even}'>
-                <span class="showInput" [hidden]="!displayInput[i]"> {{ column.controls.name.value }}</span>
-              </td>
-              <td>
-                <div class="dropdown">
-                    <button
-                        id="dropdown"
-                        type="button"
-                        (click)="toggleDropdown($event, i)"
-                        class="btn dropdown"
-                    >
-                        <span *ngIf="!column.controls.type.value" class="buttonLabel">
-                            Data Type
-                        </span>
-                        <span *ngIf="column.controls.type.value == 'VARCHAR'" class="buttonLabel">
-                            VARCHAR
-                        </span>
-                        <span *ngIf="column.controls.type.value == 'INT'" class="buttonLabel">
-                            Integer
-                        </span>
-                        <span *ngIf="column.controls.type.value == 'TEXT'" class="buttonLabel">
-                            Text
-                        </span>
-                        <span *ngIf="column.controls.type.value == 'FLOAT'" class="buttonLabel">
-                            Float
-                        </span>
-                        <mat-icon *ngIf="!showDropdownContent" style="float:right;"
-                            >expand_more</mat-icon
+            <div class="title">
+                <img
+                    class="inputIcon"
+                    src="../../../../assets/table.png"
+                    alt=""
+                />
+                <input
+                    class="inputHidden"
+                    name="name"
+                    formControlName="name"
+                    placeholder="Table name"
+                    autocomplete="off"
+                    #tableName
+                />
+            </div>
+            <div class="structure">{{ tableName.value }}</div>
+            <table>
+                <tr>
+                    <th>Column Name</th>
+                    <th>Data Type</th>
+                    <th>Actions</th>
+                </tr>
+                <tr
+                    formArrayName="columns"
+                    *ngFor="
+                        let column of columns.controls;
+                        let i = index;
+                        let odd = odd;
+                        let even = even
+                    "
+                    [ngClass]="{ oddRow: odd, evenRow: even }"
+                >
+                    <td (dblclick)="showInput(input, i)" [formGroupName]="i">
+                        <input
+                            #input
+                            class="inputHidden2"
+                            (blur)="displayInput[i] = true"
+                            type="text"
+                            formControlName="name"
+                            [hidden]="displayInput[i]"
+                            [ngClass]="{ oddRow: odd, evenRow: even }"
+                        />
+                        <span class="showInput" [hidden]="!displayInput[i]">
+                            {{ column.controls.name.value }}</span
                         >
-                        <mat-icon *ngIf="showDropdownContent" style="float:right;"
-                            >expand_less</mat-icon
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <button
+                                id="dropdown"
+                                type="button"
+                                (click)="toggleDropdown($event, i)"
+                                class="btn dropdown"
+                            >
+                                <span
+                                    *ngIf="!column.controls.type.value"
+                                    class="buttonLabel"
+                                >
+                                    Data Type
+                                </span>
+                                <span
+                                    *ngIf="
+                                        column.controls.type.value == 'VARCHAR'
+                                    "
+                                    class="buttonLabel"
+                                >
+                                    VARCHAR
+                                </span>
+                                <span
+                                    *ngIf="column.controls.type.value == 'INT'"
+                                    class="buttonLabel"
+                                >
+                                    Integer
+                                </span>
+                                <span
+                                    *ngIf="column.controls.type.value == 'TEXT'"
+                                    class="buttonLabel"
+                                >
+                                    Text
+                                </span>
+                                <span
+                                    *ngIf="
+                                        column.controls.type.value == 'FLOAT'
+                                    "
+                                    class="buttonLabel"
+                                >
+                                    Float
+                                </span>
+                                <mat-icon
+                                    *ngIf="!showDropdownContent"
+                                    style="float:right;"
+                                    >expand_more</mat-icon
+                                >
+                                <mat-icon
+                                    *ngIf="showDropdownContent"
+                                    style="float:right;"
+                                    >expand_less</mat-icon
+                                >
+                            </button>
+                            <div
+                                [ngClass]="{ show: showDropdownContent[i] }"
+                                class="dropdown-content"
+                            >
+                                <a
+                                    (click)="
+                                        toggleDropdown($event, i);
+                                        setDataTypeValue(
+                                            column.controls.type,
+                                            ''
+                                        )
+                                    "
+                                >
+                                    <span class="buttonLabel">
+                                        Data Type
+                                    </span>
+                                    <mat-icon style="float:right;"
+                                        >expand_less</mat-icon
+                                    >
+                                </a>
+                                <a (click)="setDataTypeValue(i, 'FLOAT')"
+                                    >Float</a
+                                >
+                                <a (click)="setDataTypeValue(i, 'TEXT')"
+                                    >Text</a
+                                >
+                                <a (click)="setDataTypeValue(i, 'INT')"
+                                    >Integer</a
+                                >
+                                <a (click)="setDataTypeValue(i, 'VARCHAR')"
+                                    >VARCHAR</a
+                                >
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <mat-icon (click)="deleteRow(i)" style="cursor:pointer;"
+                            >remove</mat-icon
                         >
-                    </button>
-                    <div
-                        [ngClass]="{ show: showDropdownContent[i] }"
-                        class="dropdown-content"
-                    >
-                        <a (click)="toggleDropdown($event, i);setDataTypeValue(column.controls.type, '')">
-                            <span class="buttonLabel">
-                                Data Type
-                            </span>
-                            <mat-icon style="float:right;">expand_less</mat-icon>
-                        </a>
-                        <a (click)="setDataTypeValue(i, 'FLOAT')">Float</a>
-                        <a (click)="setDataTypeValue(i, 'TEXT')">Text</a>
-                        <a (click)="setDataTypeValue(i, 'INT')">Integer</a>
-                        <a (click)="setDataTypeValue(i, 'VARCHAR')">VARCHAR</a>
-                    </div>
-                </div>
-              </td>
-              <td>
-                <mat-icon (click)="deleteRow(i)" style="cursor:pointer;">remove</mat-icon>
-              </td>
-            </tr>
-          </table>
-          <button (click)="addRow()" class="btn2 darkBlue" type="button" name="button">
-            <mat-icon class="plus">add</mat-icon>
-            <span class="buttonLabel plusLabel"> Add </span>
-          </button>
-          <div>
+                    </td>
+                </tr>
+            </table>
+
             <button
-                class="btn pink"
-                type="submit"
+                (click)="addRow()"
+                class="btn2 darkBlue"
+                type="button"
                 name="button"
-                [disabled]="loading"
             >
-              <div class="buttonLabel" style="color:#FFFFFF" *ngIf="!loading">
-                Submit
-              </div>
-              <div class="buttonLabel" style="color:#FFFFFF" *ngIf="loading">
-                Saving...
-              </div>
+                <mat-icon class="plus">add</mat-icon>
+                <span class="buttonLabel plusLabel"> Add </span>
             </button>
-          </div>
-          <div style="margin-top:28px">
-            <page-footer></page-footer>
-          </div>
+            <div>
+                <button
+                    class="btn pink"
+                    type="submit"
+                    name="button"
+                    [disabled]="loading"
+                >
+                    <div
+                        class="buttonLabel"
+                        style="color:#FFFFFF"
+                        *ngIf="!loading"
+                    >
+                        Save
+                    </div>
+                    <div
+                        class="buttonLabel"
+                        style="color:#FFFFFF"
+                        *ngIf="loading"
+                    >
+                        Saving...
+                    </div>
+                </button>
+            </div>
+            <div style="margin-top:28px">
+                <page-footer></page-footer>
+            </div>
         </form>
     </div>
 </div>
