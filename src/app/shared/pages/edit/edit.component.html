@@ -8,21 +8,21 @@
             </span>
         </div>
         <div class="edit-ctas">
-            <button class="edit-button">
-                <img class="pngIcon" src="../../../../assets/edit.png" alt="" />
+            <button class="edit-button" (click)="enableEditMode()">
+                <img class="pngEdit" src="../../../../assets/edit.png" alt="" />
                 <span class="edit-button-label edit">
                     Edit
                 </span>
             </button>
-            <button class="edit-button">
-                <img class="pngIcon" src="../../../../assets/add.png" alt="" />
+            <button class="edit-button" (click)="addEmptyRow()">
+                <img class="pngAdd" src="../../../../assets/add.png" alt="" />
                 <span class="edit-button-label add">
                     Add Row
                 </span>
             </button>
             <button class="edit-button">
                 <img
-                    class="pngIcon"
+                    class="pngUpload"
                     src="../../../../assets/upload.png"
                     alt=""
                 />
@@ -32,7 +32,7 @@
             </button>
         </div>
         <div class="table-content">
-            <hot-table
+            <hot-table #hot
                 [hotId]="tableId"
                 [settings]="tableSettings"
                 [data]="dataset"
