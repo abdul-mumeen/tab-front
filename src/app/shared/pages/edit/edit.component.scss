@@ -5,25 +5,25 @@
 }
 
 .pngUpload {
-  width: 16px;
-  height: 19px;
-  margin: 0 10px;
-  position: relative;
-  top: 2px;
+    width: 16px;
+    height: 19px;
+    margin: 0 10px;
+    position: relative;
+    top: 2px;
 }
 
 .pngAdd {
-  width: 16px;
-  height: 16px;
-  margin: 0 10px;
-  position: relative;
-  top: 1px;
+    width: 16px;
+    height: 16px;
+    margin: 0 10px;
+    position: relative;
+    top: 1px;
 }
 
 .pngEdit {
-  width: 16px;
-  height: 16px;
-  margin: 0 10px;
+    width: 16px;
+    height: 16px;
+    margin: 0 10px;
 }
 
 .edit-button-label {
@@ -54,6 +54,12 @@
     justify-content: center;
     padding-bottom: 20px;
     width: 100%;
+
+    .column-header {
+        display: block;
+        color: white;
+        background: green !important;
+    }
 }
 
 .tableStyle {
@@ -61,11 +67,12 @@
     height: 100%;
     overflow: auto;
     margin-bottom: 15px;
+    text-transform: capitalize;
 }
 
 .handsontable tr th {
-    color: #FFFFFF;
-    background-color: #403C58; /* red */
+    color: #ffffff;
+    background-color: #403c58; /* red */
 }
 
 .page-box-padding {
