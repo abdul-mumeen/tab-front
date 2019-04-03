@@ -13,7 +13,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
-import { HotTableModule } from '@handsontable-pro/angular';
+import { HotTableModule } from '@handsontable/angular';
 
 import { InterceptService, AuthService, DBService } from './services/index';
 
@@ -56,7 +56,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         ReactiveFormsModule,
         MatExpansionModule,
         MatSelectModule,
-        HotTableModule,
+        HotTableModule.forRoot(),
     ],
     providers: [
         AuthGuard,
