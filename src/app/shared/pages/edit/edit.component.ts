@@ -6,7 +6,7 @@ import { DBService } from '../../../services/db.service';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
 
-import * as Handsontable from 'handsontable';
+import Handsontable from 'handsontable';
 declare var tableau: any;
 
 @Component({
@@ -227,13 +227,13 @@ export class EditComponent implements OnInit {
     }
 
     rowRendererOne(instance, td, row, col, prop, value, cellProperties) {
-        // Handsontable.renderers.TextRenderer.apply(this, arguments);
+        Handsontable.renderers.TextRenderer.apply(this, arguments);
         td.style.color = '#8F8F8F';
         td.style.background = 'white';
     }
 
     rowRendererTwo(instance, td, row, col, prop, value, cellProperties) {
-        // Handsontable.renderers.TextRenderer.apply(this, arguments);
+        Handsontable.renderers.TextRenderer.apply(this, arguments);
         td.style.color = '#8F8F8F';
         td.style.background = '#DCDCDC';
     }

@@ -30,7 +30,9 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.db.getTables().subscribe(
             result => {
-                this.tables = result.data.tables;
+                this.tables = result.data.tables.filter(table =>
+                    this.db.tableauTables.includes(table.name),
+                );
             },
             error => {
                 this.snackBar.open('Error getting tables', 'Dismiss');

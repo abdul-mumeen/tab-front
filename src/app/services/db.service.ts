@@ -21,6 +21,8 @@ export class DBService {
     private currentTableName: string = '';
     private currentTableDef: any = null;
 
+    private _tableauTables = [];
+
     // this service is used everywhere and the constructor
     // gets called once when we first load/reload browser
     constructor(
@@ -29,6 +31,14 @@ export class DBService {
         private afDb: AngularFirestore,
         private auth: AuthService,
     ) {}
+
+    get tableauTables() {
+        return this._tableauTables;
+    }
+
+    updateTableauTables(newtables) {
+        this._tableauTables = newtables;
+    }
 
     getTables() {
         const url: string = this.auth.apiUrl + '/table';
@@ -41,7 +51,10 @@ export class DBService {
             .get(`${this.apiUrl}/table`)
             .toPromise();
         this.tables = response['data']['tables'];
-        return this.tables.map(table => table['name']);
+        const tableNames = this.tables.map(table => table['name']);
+        return tableNames.filter(tableName =>
+            this.tableauTables.includes(tableName),
+        );
     }
 
     async getTableInfo(tableName: string) {
@@ -75,7 +88,7 @@ export class DBService {
             this.auth.apiUrl + `/table/${this.currentTableName}/records`;
         return this.http.put(url, rowsData);
     }
-    
+
     getCurrentTableDef(): Array<{}> {
         return this.currentTableDef;
     }
