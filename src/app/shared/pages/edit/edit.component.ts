@@ -6,9 +6,6 @@ import { DBService } from '../../../services/db.service';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
 
-import * as Handsontable from 'handsontable';
-import { HotTableRegisterer } from '@handsontable-pro/angular';
-
 declare var tableau: any;
 
 @Component({
@@ -21,11 +18,12 @@ export class EditComponent implements OnInit {
     tableName: string;
     tableId = 'addInstance';
     firstCellReadOnly: boolean = true;
-    tableSettings: Handsontable.GridSettings = {
+    tableSettings: any = {
+        licenseKey: 'non-commercial-and-evaluation',
         stretchH: "all",
         colWidths: 100,
         colHeaders: true,
-        afterChange: (hot, changes, source) => {
+        afterChange: (hotInstance, changes, source) => {
           if(source == "edit") {
             if(this.initialDataset[changes[0][0]]){
               if(this.initialDataset[changes[0][0]][changes[0][1]] != changes[0][3]){
@@ -82,6 +80,7 @@ export class EditComponent implements OnInit {
     }
 
     resetTableColumns(columns) {
+        this.columnHeaders = [];
         this.dataset = this.dbService.getCurrentTableData();
         this.initialDataset = JSON.parse(JSON.stringify(this.dataset));
 
@@ -94,6 +93,7 @@ export class EditComponent implements OnInit {
                 });
             }
         });
+        this.hot.hotInstance.render();
     }
 
     addEmptyRow(){
@@ -130,40 +130,43 @@ export class EditComponent implements OnInit {
           gg.push(row);
         }
       });
-
-      forkJoin(
-        this.dbService.addEntries({rows: gg}),
-        this.dbService.updateEntries({rows: this.modifiedRows})
-      ).subscribe(async([create, update])=> {
-        debugger;
-        if(create){
-          const sOrNoS = this.modifiedRows.length > 1 ? 's have' : ' has';
-          const message = `${
-              gg.length
-          } record${sOrNoS} been successfully added`;
-          this.snackBar.open(message, 'Dismiss');
-        }
-        if(update){
-          const sOrNoS = gg.length > 1 ? 's have' : ' has';
-          const message = `${
-              gg.length
-          } record${sOrNoS} been successfully updated`;
-          this.snackBar.open(message, 'Dismiss');
-        }
-        this.resetTableColumns(this.columns);
-        const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
-        datasources[0].refreshAsync();
-      }, ([createError, updateError]) =>{
-        debugger;
-        if(createError){
-          const message = 'Error adding record(s)';
-          this.snackBar.open(createError, 'Dismiss');
-        }
-        if(updateError){
-          const message = 'Error updating record(s)';
-          this.snackBar.open(updateError, 'Dismiss');
-        }
-      })
+      
+      let observableRequest = [
+        ... gg.length ? [this.dbService.addEntries({rows: gg})] : [],
+        ... this.modifiedRows.length ? [this.dbService.updateEntries({rows: this.modifiedRows})] : []
+      ]
+      
+      if(observableRequest.length){
+        forkJoin(observableRequest).subscribe(async([create, update])=> {
+          if(create || update){
+            const sOrNoS = gg.length > 1 ? 's have' : ' has';
+            const message = `${
+                gg.length
+            } record${sOrNoS} been successfully added`;
+            this.snackBar.open(message, 'Dismiss', {duration: 1000}).afterDismissed().subscribe(() => {
+              const sOrNoS = this.modifiedRows.length > 1 ? 's have' : ' has';
+              const message = `${
+                  this.modifiedRows.length
+              } record${sOrNoS} been successfully updated`;
+              this.snackBar.open(message, 'Dismiss', {duration: 1000});
+              this.modifiedRows = [];
+            });
+            this.ngOnInit();
+            const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
+            datasources[0].refreshAsync();
+          }
+        }, ([createError, updateError]) =>{
+          if(createError || updateError){
+            const message = 'Error adding record(s)';
+            this.snackBar.open(createError, 'Dismiss', {duration: 2500}).afterDismissed().subscribe(() => {
+              if(updateError){
+                const message = 'Error updating record(s)';
+                this.snackBar.open(updateError, 'Dismiss', {duration: 2500});
+              }
+            });
+          }
+        })
+      }
     }
 
     async logout() {
