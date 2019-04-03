@@ -4,6 +4,28 @@
     margin: 0 10px;
 }
 
+.pngUpload {
+  width: 16px;
+  height: 19px;
+  margin: 0 10px;
+  position: relative;
+  top: 2px;
+}
+
+.pngAdd {
+  width: 16px;
+  height: 16px;
+  margin: 0 10px;
+  position: relative;
+  top: 1px;
+}
+
+.pngEdit {
+  width: 16px;
+  height: 16px;
+  margin: 0 10px;
+}
+
 .edit-button-label {
     height: 18px;
     font-family: 'Open Sans';
@@ -41,6 +63,11 @@
     margin-bottom: 15px;
 }
 
+.handsontable tr th {
+    color: #FFFFFF;
+    background-color: #403C58; /* red */
+}
+
 .page-box-padding {
     padding-top: 30px;
     padding-left: 30px;
@@ -61,6 +88,7 @@
         display: flex;
         flex-direction: row;
         align-items: baseline;
+        cursor: pointer;
     }
 
     .edit {

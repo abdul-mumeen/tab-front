@@ -70,6 +70,12 @@ export class DBService {
         return this.http.post(url, rowsData);
     }
 
+    updateEntries(rowsData) {
+        const url: string =
+            this.auth.apiUrl + `/table/${this.currentTableName}/records`;
+        return this.http.put(url, rowsData);
+    }
+    
     getCurrentTableDef(): Array<{}> {
         return this.currentTableDef;
     }
