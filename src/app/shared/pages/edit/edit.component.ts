@@ -49,8 +49,14 @@ export class EditComponent implements OnInit {
                             if (!map.has(item.old.id)) {
                                 map.set(item.old.id, true); // set any value to Map
                                 result.push(item);
+                            }else{
+                              let addedRow = result.find((ele)=> ele.old.id == item.old.id)
+                              if(!Object.keys(addedRow.new).includes(Object.keys(item.new)[0])){
+                                addedRow.new = {...addedRow.new, ...item.new} 
+                              }
                             }
                         }
+                        this.modifiedRows = result;
                     }
                 }
             }
