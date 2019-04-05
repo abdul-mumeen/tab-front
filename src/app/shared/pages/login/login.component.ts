@@ -3,7 +3,14 @@ import { Location } from '@angular/common';
 import { FormGroup, FormControl, FormBuilder, Validator } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import {
+    MatSnackBar,
+    MatDialog,
+    MatDialogRef,
+    MAT_DIALOG_DATA,
+} from '@angular/material';
+
+import { ForgetPasswordDialog } from './forget-password/forget-password.component';
 
 @Component({
     templateUrl: 'login.component.html',
@@ -18,6 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         private snackBar: MatSnackBar,
         private authService: AuthService,
         private router: Router,
+        public dialog: MatDialog,
     ) {
         this.loginForm = new FormGroup({
             email: new FormControl({ value: '', disabled: this.loading }),
@@ -27,6 +35,30 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     ngOnInit() {}
     ngOnDestroy() {}
+
+    openDialog(): void {
+        const dialogRef = this.dialog.open(ForgetPasswordDialog, {
+            width: '600px',
+        });
+
+        dialogRef.afterClosed().subscribe(async result => {
+            if (result) {
+                try {
+                    await this.authService.resetPassword(result);
+                    this.snackBar.open(
+                        'Password reset link has been sent to your email',
+                        'dismiss',
+                    );
+                } catch {
+                    this.snackBar.open(
+                        'Error resetting password - try again',
+                        'dismiss',
+                    );
+                }
+            }
+        });
+    }
+
     back() {
         this.loc.back();
     }
