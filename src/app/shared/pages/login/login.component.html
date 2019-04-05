@@ -1,7 +1,11 @@
 <div class="container">
     <div class="page-box">
         <page-header [showBackButton]="true"></page-header>
-        <form class="form" (ngSubmit)="login(loginForm.value)" [formGroup]="loginForm">
+        <form
+            class="form"
+            (ngSubmit)="login(loginForm.value)"
+            [formGroup]="loginForm"
+        >
             <input
                 class="input"
                 type="text"
@@ -33,15 +37,6 @@
                 </div>
             </button>
             <div style="margin-top:19px;">
-                <label for="remember" class="rememberMe">
-                    <input
-                        class="checkbox"
-                        type="checkbox"
-                        name="remember"
-                        value="true"
-                    />
-                    Remember me
-                </label>
                 <a class="forgotPassword" href="#">Forgot password?</a>
             </div>
         </form>
