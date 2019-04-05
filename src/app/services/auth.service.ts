@@ -196,4 +196,8 @@ export class AuthService {
     getDoc(path) {
         return this.afDb.firestore.doc(path).get();
     }
+
+    resetPassword(email: string) {
+        return this.afAuth.auth.sendPasswordResetEmail(email);
+    }
 }

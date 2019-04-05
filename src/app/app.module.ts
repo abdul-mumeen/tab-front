@@ -14,6 +14,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { HotTableModule } from '@handsontable/angular';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { InterceptService, AuthService, DBService } from './services/index';
 
@@ -28,6 +29,7 @@ import {
     SignupComponent,
     EditComponent,
     TablesComponent,
+    ForgetPasswordDialog,
 } from './shared/index';
 
 import { AuthGuard, AdminGuard } from './guards/index';
@@ -40,6 +42,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         SignupComponent,
         EditComponent,
         TablesComponent,
+        ForgetPasswordDialog,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -55,6 +58,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         FormsModule,
         ReactiveFormsModule,
         MatExpansionModule,
+        MatDialogModule,
         MatSelectModule,
         HotTableModule.forRoot(),
     ],
@@ -64,6 +68,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         AuthService,
         DBService,
         { provide: HTTP_INTERCEPTORS, useClass: InterceptService, multi: true },
+        { provide: MAT_DIALOG_DATA, useValue: [] },
         // { provide: Window, useValue: window },
         {
             provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
@@ -75,5 +80,6 @@ import { AuthGuard, AdminGuard } from './guards/index';
         },
     ],
     bootstrap: [AppComponent],
+    entryComponents: [ForgetPasswordDialog],
 })
 export class AppModule {}
