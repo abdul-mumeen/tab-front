@@ -5,6 +5,7 @@ import { forkJoin } from 'rxjs';
 import { DBService } from '../../../services/db.service';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import * as Papa from 'papaparse';
 
 import Handsontable from 'handsontable';
 declare var tableau: any;
@@ -17,9 +18,11 @@ export class EditComponent implements OnInit {
     loading: boolean = false;
     isEditMode: boolean = false;
     isAddMode: boolean = false;
-    columns: Array<{}> = [];
+    columns: Array<any> = [];
     tableName: string;
     tableId = 'addInstance';
+    parsedRec: any[] = [];
+    columnList: string[] = [];
     firstCellReadOnly: boolean = true;
     tableSettings: any = {
         licenseKey: 'non-commercial-and-evaluation',
@@ -49,8 +52,14 @@ export class EditComponent implements OnInit {
                             if (!map.has(item.old.id)) {
                                 map.set(item.old.id, true); // set any value to Map
                                 result.push(item);
+                            }else{
+                              let addedRow = result.find((ele)=> ele.old.id == item.old.id)
+                              if(!Object.keys(addedRow.new).includes(Object.keys(item.new)[0])){
+                                addedRow.new = {...addedRow.new, ...item.new} 
+                              }
                             }
                         }
+                        this.modifiedRows = result;
                     }
                 }
             }
@@ -72,6 +81,7 @@ export class EditComponent implements OnInit {
     initialDataset: any[] = [];
     newRows: any[] = [];
     modifiedRows: any[] = [];
+    truncateTable:boolean = false;
     dataset: any[] = [];
 
     constructor(
@@ -86,6 +96,8 @@ export class EditComponent implements OnInit {
     }
 
     async ngOnInit() {
+        this.truncateTable = false;
+
         this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
         try {
             this.tableMetadata = await this.dbService.getTableInfo(
@@ -95,6 +107,7 @@ export class EditComponent implements OnInit {
             this.error = true;
         }
         this.columns = this.dbService.getCurrentTableDef();
+        this.columns.forEach(col=> this.columnList.push(col.name));
         this.resetTableColumns(this.columns);
     }
 
@@ -135,7 +148,40 @@ export class EditComponent implements OnInit {
         this.hot.hotInstance.getActiveEditor().enableFullEditMode();
     }
 
+    selectFiles(event, ele) {
+      
+      const files = event.target.files
+      const { type } = files[0]
+      if(type != 'text/csv'){
+        ele.value = null;
+        this.snackBar.open('Invalid file type', 'Dismiss');
+      }else{
+        Papa.parse(files[0],
+          {
+            delimiter: ',',
+            header: true,
+            step: (results, parser)=> {
+              if(!results.errors.length && Object.keys(results.data[0]).every(item=> this.columnList.includes(item))){
+                this.parsedRec.push(results.data[0])
+              }
+            },
+            complete: (results, file)=> {
+              if(this.parsedRec.length){
+                this.dataset = JSON.parse(JSON.stringify(this.parsedRec));
+                this.truncateTable = true;
+                this.parsedRec = [];
+                this.snackBar.open('File parsing completed', 'Dismiss');
+              }else{
+                this.snackBar.open('File does not contain valid data', 'Dismiss');
+              }
+            }
+          }
+        )
+      }
+  }
+
     submit() {
+      this.loading = true;
         const data = this.hot.hotInstance.getSourceData();
         const columnHeaders = Object.keys(this.dataset[0]);
         let gg = [];
@@ -156,7 +202,7 @@ export class EditComponent implements OnInit {
         });
 
         let observableRequest = [
-            ...(gg.length ? [this.dbService.addEntries({ rows: gg })] : []),
+            ...(gg.length ? [this.dbService.addEntries({ rows: gg, truncate: this.truncateTable })] : []),
             ...(this.modifiedRows.length
                 ? [this.dbService.updateEntries({ rows: this.modifiedRows })]
                 : []),
@@ -189,36 +235,18 @@ export class EditComponent implements OnInit {
                         this.ngOnInit();
                         const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
                         datasources[0].refreshAsync();
+                        this.loading = false;
                     }
                 },
-                ([createError, updateError]) => {
-                    if (createError || updateError) {
-                        const message = 'Error adding record(s)';
-                        this.snackBar
-                            .open(createError, 'Dismiss', { duration: 2500 })
-                            .afterDismissed()
-                            .subscribe(() => {
-                                if (updateError) {
-                                    const message = 'Error updating record(s)';
-                                    this.snackBar.open(updateError, 'Dismiss', {
-                                        duration: 2500,
-                                    });
-                                }
-                            });
-                    }
+                async (err) => {
+                  this.snackBar
+                      .open(err.error.data.message, 'Dismiss', { duration: 2500 });
+                  this.ngOnInit();
+                  const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
+                  datasources[0].refreshAsync();
+                  this.loading = false;
                 },
             );
-        }
-    }
-
-    async logout() {
-        this.loading = true;
-        try {
-            await this.authService.logout();
-            this.router.navigate(['/landing']);
-        } catch {
-        } finally {
-            this.loading = false;
         }
     }
 
