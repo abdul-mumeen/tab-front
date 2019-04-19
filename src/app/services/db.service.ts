@@ -68,17 +68,17 @@ export class DBService {
         );
     }
 
-    async getTableInfo(tableName: string) {
+    async getTableInfo(tableName: string, perPage:number = 10, page:number = 0) {
         const headers = this.auth.authHeaders();
         // Todo: Handle errors
         try {
-            const url: string = this.auth.apiUrl + `/table/${tableName}`;
+            const url: string = this.auth.apiUrl + `/table/${tableName}?limit=${perPage}&page=${page}`;
             const response = await this.http.get<any>(url, {headers: headers}).toPromise();
 
             this.currentTableName = tableName;
             this.currentTableData = response.data['table']['rows'];
             this.currentTableDef = response.data['table']['columns'];
-            return Promise.resolve();
+            return Promise.resolve(response.data['table']['total']);
         } catch (error) {
             return Promise.reject(error);
         }

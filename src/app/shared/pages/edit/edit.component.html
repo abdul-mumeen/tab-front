@@ -8,13 +8,13 @@
             </span>
         </div>
         <div class="edit-ctas">
-            <button class="edit-button" (click)="enableEditMode()">
+            <button [disabled]="spin" class="edit-button" (click)="enableEditMode()">
                 <img class="pngEdit" src="../../../../assets/edit.png" alt="" />
                 <span class="edit-button-label edit">
                     Edit
                 </span>
             </button>
-            <button class="edit-button" (click)="addEmptyRow()">
+            <button [disabled]="spin" class="edit-button" (click)="addEmptyRow()">
                 <img class="pngAdd" src="../../../../assets/add.png" alt="" />
                 <span class="edit-button-label add">
                     Add Row
@@ -23,7 +23,7 @@
             <input #uploadInput type="file" hidden (change)="selectFiles($event, uploadInput); uploadInput.value = null"
               [accept]="'.csv'" [multiple]="false"
             >
-            <button class="edit-button" (click)="uploadInput.click()">
+            <button [disabled]="spin" class="edit-button" (click)="uploadInput.click()">
                 <img
                     class="pngUpload"
                     src="../../../../assets/upload.png"
@@ -35,6 +35,9 @@
             </button>
         </div>
         <div class="table-content">
+            <div class="loading" [ngClass]="{ hide: !spin }">
+                <div class="loader"></div>
+            </div>
             <hot-table #hot
                 [hotId]="tableId"
                 [settings]="tableSettings"
@@ -43,6 +46,11 @@
                 class="tableStyle"
             >
             </hot-table>
+            <mat-paginator [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="pageChange($event)">
+            </mat-paginator>
             <div style="width:80%">
                 <button
                     class="btn pink"

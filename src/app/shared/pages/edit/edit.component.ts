@@ -1,10 +1,11 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DBService } from '../../../services/db.service';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import { PageEvent } from '@angular/material';
 import * as Papa from 'papaparse';
 
 import Handsontable from 'handsontable';
@@ -24,6 +25,8 @@ export class EditComponent implements OnInit {
     parsedRec: any[] = [];
     columnList: string[] = [];
     firstCellReadOnly: boolean = true;
+    length: number;
+    pageSize: number = 10;
     tableSettings: any = {
         licenseKey: 'non-commercial-and-evaluation',
         stretchH: 'all',
@@ -75,11 +78,10 @@ export class EditComponent implements OnInit {
         },
     };
     @ViewChild('hot') hot: any;
+    spin:boolean = false;
     columnHeaders: any[] = [];
-    tableMetadata: any;
     error: boolean = false;
     initialDataset: any[] = [];
-    newRows: any[] = [];
     modifiedRows: any[] = [];
     truncateTable:boolean = false;
     dataset: any[] = [];
@@ -101,7 +103,7 @@ export class EditComponent implements OnInit {
 
         this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
         try {
-            this.tableMetadata = await this.dbService.getTableInfo(
+            this.length = await this.dbService.getTableInfo(
                 this.tableName,
             );
         } catch {
@@ -149,6 +151,33 @@ export class EditComponent implements OnInit {
         this.hot.hotInstance.getActiveEditor().enableFullEditMode();
     }
 
+    async pageChange(pageEvent: PageEvent){
+      this.modifiedRows = [];
+      this.spin = true;
+      this.hot.hotInstance.updateSettings({
+        readOnly: true, // make table cells read-only
+        contextMenu: false, // disable context menu to change things
+        disableVisualSelection: true, // prevent user from visually selecting
+        manualColumnResize: false, // prevent dragging to resize columns
+        manualRowResize: false, // prevent dragging to resize rows
+        comments: false, // prevent editing of comments
+      });
+      this.length = await this.dbService.getTableInfo(
+          this.tableName, this.pageSize, pageEvent.pageIndex
+      )
+      this.dataset = this.dbService.getCurrentTableData();
+      this.initialDataset = JSON.parse(JSON.stringify(this.dataset));
+      this.hot.hotInstance.updateSettings({
+        readOnly: false, // make table cells read-only
+        contextMenu: true, // disable context menu to change things
+        disableVisualSelection: false, // prevent user from visually selecting
+        manualColumnResize: true, // prevent dragging to resize columns
+        manualRowResize: true, // prevent dragging to resize rows
+        comments: true, // prevent editing of comments
+      });
+      this.spin = false;
+    }
+  
     selectFiles(event, ele) {
       
       const files = event.target.files
