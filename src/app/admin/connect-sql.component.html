@@ -1,0 +1,103 @@
+<div class="container">
+    <div class="page-box">
+        <page-header [showBackButton]="true"></page-header>
+        <div class="label">
+            <span>MySQL</span>
+        </div>
+        <form
+            class="form"
+            (ngSubmit)="connectToDatabase()"
+            [formGroup]="tableForm"
+        >
+            <div>
+                <div class="form-line">
+                    <span>Server:</span>
+                    <div class="title width-110">
+                        <input
+                            class="inputHidden"
+                            name="server"
+                            formControlName="server"
+                            placeholder="tessellation.com"
+                            autocomplete="off"
+                        />
+                    </div>
+                    <span>Port:</span>
+                    <div class="title width-60">
+                        <input
+                            class="inputHidden"
+                            name="port"
+                            formControlName="port"
+                            placeholder="3306"
+                            autocomplete="off"
+                        />
+                    </div>
+                </div>
+                <div class="form-line">
+                    <span>Database:</span>
+                    <div class="title">
+                        <input
+                            class="inputHidden"
+                            name="database"
+                            formControlName="database"
+                            placeholder="tessellation"
+                            autocomplete="off"
+                        />
+                    </div>
+                </div>
+                <div class="info">
+                    <span>Enter information to sign in to the database:</span>
+                </div>
+                <div class="form-line">
+                    <span>Username:</span>
+                    <div class="title">
+                        <input
+                            class="inputHidden"
+                            name="username"
+                            formControlName="username"
+                            placeholder="myusername"
+                            autocomplete="off"
+                        />
+                    </div>
+                </div>
+                <div class="form-line">
+                    <span>Password:</span>
+                    <div class="title">
+                        <input
+                            class="inputHidden"
+                            name="password"
+                            formControlName="password"
+                            placeholder="**************"
+                            autocomplete="off"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button
+                    class="btn pink"
+                    type="submit"
+                    name="button"
+                    [disabled]="loading"
+                >
+                    <div
+                        class="buttonLabel"
+                        style="color:#FFFFFF"
+                        *ngIf="!loading"
+                    >
+                        Connect to database
+                    </div>
+                    <div
+                        class="buttonLabel"
+                        style="color:#FFFFFF"
+                        *ngIf="loading"
+                    >
+                        Connecting...
+                    </div>
+                </button>
+            </div>
+            <div style="margin-top:28px">
+                <page-footer></page-footer>
+            </div>
+        </form>
+    </div>
+</div>
