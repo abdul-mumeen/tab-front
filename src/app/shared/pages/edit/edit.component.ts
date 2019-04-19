@@ -78,6 +78,7 @@ export class EditComponent implements OnInit {
         },
     };
     @ViewChild('hot') hot: any;
+    @ViewChild('paginator') paginator: any;
     spin:boolean = false;
     columnHeaders: any[] = [];
     error: boolean = false;
@@ -129,6 +130,7 @@ export class EditComponent implements OnInit {
             }
         });
         this.hot.hotInstance.render();
+        this.paginator._pageIndex = 0;
     }
 
     addEmptyRow() {

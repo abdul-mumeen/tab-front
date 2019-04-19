@@ -49,7 +49,7 @@
             <mat-paginator [length]="length"
               [pageSize]="pageSize"
               [pageSizeOptions]="pageSizeOptions"
-              (page)="pageChange($event)">
+              (page)="pageChange($event)" #paginator>
             </mat-paginator>
             <div style="width:80%">
                 <button
