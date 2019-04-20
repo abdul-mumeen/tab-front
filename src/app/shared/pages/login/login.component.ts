@@ -3,12 +3,7 @@ import { Location } from '@angular/common';
 import { FormGroup, FormControl, FormBuilder, Validator } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
-import {
-    MatSnackBar,
-    MatDialog,
-    MatDialogRef,
-    MAT_DIALOG_DATA,
-} from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 import { ForgetPasswordDialog } from './forget-password/forget-password.component';
 

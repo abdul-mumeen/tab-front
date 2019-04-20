@@ -12,6 +12,8 @@ import { DBService } from '../services/db.service';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 
+declare var tableau: any;
+
 @Component({
     templateUrl: 'connect-sql.component.html',
     styleUrls: ['connect-sql.component.scss'],
@@ -25,6 +27,7 @@ export class ConnectSqlComponent implements OnInit {
         private db: DBService,
         private snackBar: MatSnackBar,
     ) {
+        tableau.extensions.initializeAsync();
         this.tableForm = new FormGroup({
             server: new FormControl('', Validators.required),
             port: new FormControl('', Validators.required),
@@ -34,30 +37,31 @@ export class ConnectSqlComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
-        // console.log(this.tableForm.get('columns'), 'sss')
-    }
+    ngOnInit() {}
 
-    connectToDatabase() {
+    async connectToDatabase() {
         this.loading = true;
         if (this.tableForm.valid) {
             let valuesObject = this.tableForm.getRawValue();
-            console.log(valuesObject);
+            const connectionDetails = this.db.connectionDetails;
 
-            // this.db.createTables(values).subscribe(
-            //     result => {
-            //         this.snackBar.open(
-            //             `Table ${values.name} created successfully`,
-            //             'Dismiss',
-            //         );
-            //         this.tableForm.reset();
-            //         this.loading = false;
-            //     },
-            //     error => {
-            //         this.snackBar.open(`Transaction failed`, 'Dismiss');
-            //         this.loading = false;
-            //     },
-            // );
+            if (
+                !connectionDetails ||
+                connectionDetails.name !== valuesObject.server
+            ) {
+                this.snackBar.open(
+                    'The database connected to in tableau must match the one here. Kindly verify and try again',
+                    'dismiss',
+                );
+            }
+
+            try {
+                this.db.connectToDatabase({
+                    ...connectionDetails,
+                    ...valuesObject,
+                });
+            } catch {}
+            this.loading = false;
         } else {
             this.snackBar.open(
                 'Invalid form! All fields are required',

@@ -15,6 +15,9 @@ export class LandingComponent implements OnInit {
     async ngOnInit() {
         try {
             const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
+            const connectionSummaries = await datasources[0].getConnectionSummariesAsync();
+            console.log(connectionSummaries);
+            this.dbService.updateConnectionDetails(connectionSummaries[0]);
             const tableSummaries = await datasources[0].getActiveTablesAsync();
             const tables = tableSummaries.map(summary => summary.name);
             this.dbService.updateTableauTables(tables);

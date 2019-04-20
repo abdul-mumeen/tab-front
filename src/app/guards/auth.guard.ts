@@ -6,12 +6,18 @@ import {
     ActivatedRouteSnapshot,
     RouterStateSnapshot,
 } from '@angular/router';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
-import { AuthService } from '../services/index';
+import { AuthService, DBService } from '../services/index';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-    constructor(private router: Router, private authService: AuthService) {}
+    constructor(
+        private router: Router,
+        private authService: AuthService,
+        private dbService: DBService,
+        private snackBar: MatSnackBar,
+    ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         return this.authService
@@ -25,7 +31,17 @@ export class AuthGuard implements CanActivate {
 
     isLoggedIn(user, state) {
         if (user) {
-            return Promise.resolve(true);
+            if (this.dbService.connectionDetails) {
+                return Promise.resolve(true);
+            } else {
+                this.snackBar.open(
+                    'No database connection for tableau. Connect to a database on tableau and try again',
+                );
+                this.router.navigate(['/landing'], {
+                    queryParams: { returnUrl: state.url },
+                });
+                return Promise.resolve(false);
+            }
         } else {
             this.router.navigate(['/landing'], {
                 queryParams: { returnUrl: state.url },

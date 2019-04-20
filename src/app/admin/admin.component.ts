@@ -53,6 +53,10 @@ export class AdminComponent implements OnInit {
         }
     }
 
+    goToConnect() {
+        this.router.navigate(['admin/connect_sql']);
+    }
+
     async logout() {
         this.loading = true;
         try {

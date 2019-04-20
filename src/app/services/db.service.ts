@@ -22,6 +22,7 @@ export class DBService {
     private currentTableDef: any = null;
 
     private _tableauTables = [];
+    private _connectionDetails = null;
 
     // this service is used everywhere and the constructor
     // gets called once when we first load/reload browser
@@ -38,6 +39,14 @@ export class DBService {
 
     updateTableauTables(newtables) {
         this._tableauTables = newtables;
+    }
+
+    get connectionDetails() {
+        return this._connectionDetails;
+    }
+
+    updateConnectionDetails(connectionDetails) {
+        this._connectionDetails = connectionDetails;
     }
 
     getTables() {
@@ -75,6 +84,11 @@ export class DBService {
     createTables(tableData) {
         const url: string = this.auth.apiUrl + '/table';
         return this.http.post(url, tableData);
+    }
+
+    connectToDatabase(connectionDetails) {
+        const url: string = this.auth.apiUrl + '/connect';
+        return this.http.post(url, connectionDetails);
     }
 
     addEntries(rowsData) {
