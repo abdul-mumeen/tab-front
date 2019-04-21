@@ -16,9 +16,12 @@ import {
 import { environment } from '../../environments/environment';
 import { UserModel } from '../../models/models';
 
+declare var tableau: any;
+
 @Injectable()
 export class AuthService {
     public apiUrl: string = environment.apiRoot;
+    private _connectionDetails = null;
 
     public user: BehaviorSubject<UserModel> = new BehaviorSubject(null);
     private token: string;
@@ -66,6 +69,14 @@ export class AuthService {
             });
     }
 
+    get connectionDetails() {
+        return this._connectionDetails;
+    }
+
+    updateConnectionDetails(connectionDetails) {
+        this._connectionDetails = connectionDetails;
+    }
+
     async registerEmailUser(name: string, email: string, password: string) {
         try {
             const userCred = await firebase
@@ -90,6 +101,8 @@ export class AuthService {
     public authHeaders() {
         // create authorization header with our jwt token
         if (this.token) {
+            let connectionId = this.connectionDetails.id;
+            let isAdmin = this.userDetails.role == 'admin'?true:false;
             let headers = new HttpHeaders({
                 Authorization: this.token,
                 connection_id: connectionId,

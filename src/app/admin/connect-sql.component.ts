@@ -43,7 +43,7 @@ export class ConnectSqlComponent implements OnInit {
         this.loading = true;
         if (this.tableForm.valid) {
             let valuesObject = this.tableForm.getRawValue();
-            const connectionDetails = this.db.connectionDetails;
+            const connectionDetails = this.authService.connectionDetails;
 
             if (
                 !connectionDetails ||

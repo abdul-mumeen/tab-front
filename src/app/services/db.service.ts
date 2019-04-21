@@ -9,6 +9,8 @@ import { Observable, BehaviorSubject, of } from 'rxjs';
 import { map, catchError, exhaustMap, flatMap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
+declare var tableau: any;
+
 @Injectable()
 export class DBService {
     public apiUrl: string = environment.apiRoot;
@@ -22,7 +24,6 @@ export class DBService {
     private currentTableDef: any = null;
 
     private _tableauTables = [];
-    private _connectionDetails = null;
 
     // this service is used everywhere and the constructor
     // gets called once when we first load/reload browser
@@ -31,7 +32,14 @@ export class DBService {
         private afAuth: AngularFireAuth,
         private afDb: AngularFirestore,
         private auth: AuthService,
-    ) {}
+    ) {
+      tableau.extensions.initializeAsync().then(async()=>{
+        const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
+        const tableSummaries = await datasources[0].getActiveTablesAsync();
+        const tables = tableSummaries.map(summary => summary.name);
+        this.updateTableauTables(tables);
+      })
+    }
 
     get tableauTables() {
         return this._tableauTables;
@@ -41,23 +49,17 @@ export class DBService {
         this._tableauTables = newtables;
     }
 
-    get connectionDetails() {
-        return this._connectionDetails;
-    }
-
-    updateConnectionDetails(connectionDetails) {
-        this._connectionDetails = connectionDetails;
-    }
-
     getTables() {
         const url: string = this.auth.apiUrl + '/table';
-        return this.http.get<any>(url);
+        const headers = this.auth.authHeaders();
+        return this.http.get<any>(url, {headers: headers});
     }
 
     async getTabless() {
         // Todo: handle errors
+        const headers = this.auth.authHeaders();
         const response = await this.http
-            .get(`${this.apiUrl}/table`)
+            .get(`${this.apiUrl}/table`, {headers: headers})
             .toPromise();
         this.tables = response['data']['tables'];
         const tableNames = this.tables.map(table => table['name']);
@@ -67,10 +69,11 @@ export class DBService {
     }
 
     async getTableInfo(tableName: string) {
+        const headers = this.auth.authHeaders();
         // Todo: Handle errors
         try {
             const url: string = this.auth.apiUrl + `/table/${tableName}`;
-            const response = await this.http.get<any>(url).toPromise();
+            const response = await this.http.get<any>(url, {headers: headers}).toPromise();
 
             this.currentTableName = tableName;
             this.currentTableData = response.data['table']['rows'];
@@ -82,25 +85,29 @@ export class DBService {
     }
 
     createTables(tableData) {
+        const headers = this.auth.authHeaders();
         const url: string = this.auth.apiUrl + '/table';
-        return this.http.post(url, tableData);
+        return this.http.post(url, tableData, {headers: headers});
     }
 
     connectToDatabase(connectionDetails) {
+        const headers = this.auth.authHeaders();
         const url: string = this.auth.apiUrl + '/connect';
-        return this.http.post(url, connectionDetails);
+        return this.http.post(url, connectionDetails, {headers: headers});
     }
 
     addEntries(rowsData) {
+        const headers = this.auth.authHeaders();
         const url: string =
             this.auth.apiUrl + `/table/${this.currentTableName}/records`;
-        return this.http.post(url, rowsData);
+        return this.http.post(url, rowsData, {headers: headers});
     }
 
     updateEntries(rowsData) {
+        const headers = this.auth.authHeaders();
         const url: string =
             this.auth.apiUrl + `/table/${this.currentTableName}/records`;
-        return this.http.put(url, rowsData);
+        return this.http.put(url, rowsData, {headers: headers});
     }
 
     getCurrentTableDef(): Array<{}> {
