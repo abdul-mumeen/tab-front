@@ -21,7 +21,6 @@ export class AuthService {
     public apiUrl: string = environment.apiRoot;
 
     public user: BehaviorSubject<UserModel> = new BehaviorSubject(null);
-    public LoggedIn: any;
     private token: string;
 
     // this service is used everywhere and the constructor
@@ -31,8 +30,14 @@ export class AuthService {
         private afAuth: AngularFireAuth,
         private afDb: AngularFirestore,
     ) {
-        // this.token = this.getToken();
-        this.LoggedIn = new BehaviorSubject(null); // maintian LoggedIn info
+
+        tableau.extensions.initializeAsync().then(async()=>{
+          const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
+          const connectionSummaries = await datasources[0].getConnectionSummariesAsync();
+          this.updateConnectionDetails(connectionSummaries[0]);
+        });
+
+        this.token = this.getToken();
 
         this.afAuth.user
             .pipe(
@@ -86,28 +91,10 @@ export class AuthService {
         // create authorization header with our jwt token
         if (this.token) {
             let headers = new HttpHeaders({
-                Authorization: 'JWT ' + this.token,
+                Authorization: this.token,
+                connection_id: connectionId,
+                admin: isAdmin? 'true': 'false',
                 'Content-Type': 'application/json',
-            });
-            return headers;
-        }
-    }
-
-    public authBlobDownloadHeaders() {
-        if (this.token) {
-            let headers = new HttpHeaders({
-                Authorization: 'JWT ' + this.token,
-                'Content-Type': 'application/json',
-            });
-            return headers;
-        }
-    }
-
-    public authUploadHeaders() {
-        if (this.token) {
-            let headers = new HttpHeaders({
-                Authorization: 'JWT ' + this.token,
-                encrypt: 'multipart/form-data',
             });
             return headers;
         }
@@ -130,6 +117,7 @@ export class AuthService {
     }
 
     public logout() {
+        sessionStorage.removeItem('token');
         return this.afAuth.auth.signOut();
     }
 
@@ -142,6 +130,12 @@ export class AuthService {
             const userCred = await firebase
                 .auth()
                 .signInWithEmailAndPassword(email, password);
+            this.getAPItoken(userCred.user.uid).subscribe(
+              (tokenResponse: any) => {
+                this.storeToken(tokenResponse.data.token);
+                return null;
+              }
+            );
             const userDocRef = await this.getDoc(`users/${userCred.user.uid}`);
             const userDoc = userDocRef.data();
             this.updateUser({
@@ -159,35 +153,20 @@ export class AuthService {
         this.user.next(user);
     }
 
-    private loadUser() {
-        // load user info
+    private getToken() {
+        return sessionStorage.getItem('token') || null;
     }
 
-    private authUser(email: string, password: string): Observable<any> {
-        let headers = this.contentHeader();
-        let data = JSON.stringify({ email: email, password: password });
-        return this.http.post(this.apiUrl + '/login', data, {
-            headers: headers,
-        });
+    private getAPItoken(uuid: string) {
+      let headers = this.contentHeader();
+      let data = { uuid: uuid };
+      return this.http.post(this.apiUrl + '/auth/authenticate', data, {headers: headers})
     }
 
-    private getUser() {
-        return JSON.parse(sessionStorage.getItem('user'));
+    private storeToken(newToken: string) {
+        this.token = newToken;
+        sessionStorage.setItem('token', newToken);
     }
-
-    private storeUser(user: any) {
-        this.user = user;
-        sessionStorage.setItem('user', JSON.stringify(user));
-    }
-
-    // private getToken() {
-    //     return localStorage.getItem('token') || null;
-    // }
-
-    // private storeToken(newToken: string) {
-    //     this.token = newToken;
-    //     localStorage.setItem('token', newToken);
-    // }
 
     setDoc(docPath, data = {}, options = {}): Promise<void> {
         return this.afDb.doc(docPath).set(data, options);
