@@ -37,26 +37,26 @@ export class EditComponent implements OnInit {
                         changes[0][3]
                     ) {
                         let oldRow = this.initialDataset[changes[0][0]];
-                        let modifiedCol = {};
+                        let modifiedCol = {tessellation_id: oldRow.tessellation_id};
                         modifiedCol[changes[0][1]] = changes[0][3];
 
-                        this.modifiedRows.push({
-                            old: oldRow,
-                            new: modifiedCol,
-                        });
+                        this.modifiedRows.push({...modifiedCol});
                         const result = [];
                         const map = new Map();
                         for (const item of this.modifiedRows
                             .slice()
                             .reverse()) {
-                            if (!map.has(item.old.id)) {
-                                map.set(item.old.id, true); // set any value to Map
+                            if (!map.has(item.tessellation_id)) {
+                                map.set(item.tessellation_id, true); // set any value to Map
                                 result.push(item);
                             }else{
-                              let addedRow = result.find((ele)=> ele.old.id == item.old.id)
-                              if(!Object.keys(addedRow.new).includes(Object.keys(item.new)[0])){
-                                addedRow.new = {...addedRow.new, ...item.new} 
-                              }
+                              result.forEach(ele => {
+                                if(item.tessellation_id == item.tessellation_id){
+                                  if(!Object.keys(ele).includes(Object.keys(item).filter(key => key != 'tessellation_id')[0])){
+                                    Object.assign(ele, item)
+                                  }
+                                }
+                              })
                             }
                         }
                         this.modifiedRows = result;
@@ -96,6 +96,7 @@ export class EditComponent implements OnInit {
     }
 
     async ngOnInit() {
+      console.log('sdd')
         this.truncateTable = false;
 
         this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
@@ -117,7 +118,7 @@ export class EditComponent implements OnInit {
         this.initialDataset = JSON.parse(JSON.stringify(this.dataset));
 
         columns.forEach(column => {
-            if (column['name'] !== 'id') {
+            if (!['tessellation_id', 'tessellation_created_by', 'id'].includes(column['name'])) {
                 // obj[column['name']] = '';
                 this.columnHeaders.push({
                     data: column['name'],
@@ -187,17 +188,8 @@ export class EditComponent implements OnInit {
         let gg = [];
         data.forEach((item, index) => {
             let emptyRow = this.hot.hotInstance.isEmptyRow(index);
-            let row = [];
             if (!item.id && !emptyRow) {
-                columnHeaders.forEach(columnName => {
-                    if (columnName !== 'id') {
-                        let col = {};
-                        col['columnName'] = columnName;
-                        col['value'] = item[columnName];
-                        row.push(col);
-                    }
-                });
-                gg.push(row);
+                gg.push(item)
             }
         });
 
