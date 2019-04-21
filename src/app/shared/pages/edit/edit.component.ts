@@ -81,6 +81,7 @@ export class EditComponent implements OnInit {
     @ViewChild('paginator') paginator: any;
     spin:boolean = false;
     columnHeaders: any[] = [];
+    hidePaginator: boolean = false;
     error: boolean = false;
     initialDataset: any[] = [];
     modifiedRows: any[] = [];
@@ -99,7 +100,6 @@ export class EditComponent implements OnInit {
     }
 
     async ngOnInit() {
-      console.log('sdd')
         this.truncateTable = false;
 
         this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
@@ -181,7 +181,6 @@ export class EditComponent implements OnInit {
     }
   
     selectFiles(event, ele) {
-      
       const files = event.target.files
       const { type } = files[0]
       if(type != 'text/csv'){
@@ -202,6 +201,7 @@ export class EditComponent implements OnInit {
                 this.dataset = JSON.parse(JSON.stringify(this.parsedRec));
                 this.truncateTable = true;
                 this.parsedRec = [];
+                this.hidePaginator = true;
                 this.snackBar.open('File parsing completed', 'Dismiss');
               }else{
                 this.snackBar.open('File does not contain valid data', 'Dismiss');
@@ -254,6 +254,7 @@ export class EditComponent implements OnInit {
                                     duration: 1000,
                                 });
                                 this.modifiedRows = [];
+                                this.hidePaginator = false;
                             });
                         this.ngOnInit();
                         const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();

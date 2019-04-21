@@ -44,9 +44,11 @@
                 [data]="dataset"
                 [columns]="columnHeaders"
                 class="tableStyle"
+                [ngClass]="{ tableMargin: hidePaginator }"
             >
             </hot-table>
             <mat-paginator [length]="length"
+              *ngIf="!hidePaginator"
               [pageSize]="pageSize"
               [pageSizeOptions]="pageSizeOptions"
               (page)="pageChange($event)" #paginator>
