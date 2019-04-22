@@ -26,13 +26,14 @@ export class ConnectSqlComponent implements OnInit {
         private authService: AuthService,
         private db: DBService,
         private snackBar: MatSnackBar,
+        private router: Router
     ) {
         tableau.extensions.initializeAsync();
         this.tableForm = new FormGroup({
-            server: new FormControl('', Validators.required),
+            host: new FormControl('', Validators.required),
             port: new FormControl('', Validators.required),
             database: new FormControl('', Validators.required),
-            username: new FormControl('', Validators.required),
+            user: new FormControl('', Validators.required),
             password: new FormControl('', Validators.required),
         });
     }
@@ -43,11 +44,11 @@ export class ConnectSqlComponent implements OnInit {
         this.loading = true;
         if (this.tableForm.valid) {
             let valuesObject = this.tableForm.getRawValue();
-            const connectionDetails = this.db.connectionDetails;
+            const connectionDetails = this.authService.connectionDetails;
 
             if (
                 !connectionDetails ||
-                connectionDetails.name !== valuesObject.server
+                connectionDetails.name !== valuesObject.host
             ) {
                 this.snackBar.open(
                     'The database connected to in tableau must match the one here. Kindly verify and try again',
@@ -56,10 +57,23 @@ export class ConnectSqlComponent implements OnInit {
             }
 
             try {
-                this.db.connectToDatabase({
-                    ...connectionDetails,
-                    ...valuesObject,
-                });
+                valuesObject.client = connectionDetails.type.toLowerCase();
+                valuesObject.port = +valuesObject.port
+                this.db.connectToDatabase(valuesObject).subscribe(
+                  result=> {
+                    this.snackBar.open(
+                        'Success',
+                        'Dismiss',
+                    );
+                    this.router.navigate(['table/new']);
+                  },
+                  err=> {
+                    this.snackBar.open(
+                        err.error.data.message,
+                        'Dismiss',
+                    );
+                  }
+                );
             } catch {}
             this.loading = false;
         } else {

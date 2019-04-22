@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
 
     isLoggedIn(user, state) {
         if (user) {
-            if (this.dbService.connectionDetails) {
+            if (this.authService.connectionDetails) {
                 return Promise.resolve(true);
             } else {
                 this.snackBar.open(

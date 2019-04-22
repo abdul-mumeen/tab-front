@@ -1,10 +1,11 @@
-import { Component, OnInit, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DBService } from '../../../services/db.service';
 import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
+import { PageEvent } from '@angular/material';
 import * as Papa from 'papaparse';
 
 import Handsontable from 'handsontable';
@@ -24,6 +25,8 @@ export class EditComponent implements OnInit {
     parsedRec: any[] = [];
     columnList: string[] = [];
     firstCellReadOnly: boolean = true;
+    length: number;
+    pageSize: number = 10;
     tableSettings: any = {
         licenseKey: 'non-commercial-and-evaluation',
         stretchH: 'all',
@@ -37,26 +40,26 @@ export class EditComponent implements OnInit {
                         changes[0][3]
                     ) {
                         let oldRow = this.initialDataset[changes[0][0]];
-                        let modifiedCol = {};
+                        let modifiedCol = {tessellation_id: oldRow.tessellation_id};
                         modifiedCol[changes[0][1]] = changes[0][3];
 
-                        this.modifiedRows.push({
-                            old: oldRow,
-                            new: modifiedCol,
-                        });
+                        this.modifiedRows.push({...modifiedCol});
                         const result = [];
                         const map = new Map();
                         for (const item of this.modifiedRows
                             .slice()
                             .reverse()) {
-                            if (!map.has(item.old.id)) {
-                                map.set(item.old.id, true); // set any value to Map
+                            if (!map.has(item.tessellation_id)) {
+                                map.set(item.tessellation_id, true); // set any value to Map
                                 result.push(item);
                             }else{
-                              let addedRow = result.find((ele)=> ele.old.id == item.old.id)
-                              if(!Object.keys(addedRow.new).includes(Object.keys(item.new)[0])){
-                                addedRow.new = {...addedRow.new, ...item.new} 
-                              }
+                              result.forEach(ele => {
+                                if(item.tessellation_id == item.tessellation_id){
+                                  if(!Object.keys(ele).includes(Object.keys(item).filter(key => key != 'tessellation_id')[0])){
+                                    Object.assign(ele, item)
+                                  }
+                                }
+                              })
                             }
                         }
                         this.modifiedRows = result;
@@ -75,11 +78,12 @@ export class EditComponent implements OnInit {
         },
     };
     @ViewChild('hot') hot: any;
+    @ViewChild('paginator') paginator: any;
+    spin:boolean = false;
     columnHeaders: any[] = [];
-    tableMetadata: any;
+    hidePaginator: boolean = false;
     error: boolean = false;
     initialDataset: any[] = [];
-    newRows: any[] = [];
     modifiedRows: any[] = [];
     truncateTable:boolean = false;
     dataset: any[] = [];
@@ -100,7 +104,7 @@ export class EditComponent implements OnInit {
 
         this.tableName = this.activatedRoute.snapshot.paramMap.get('name');
         try {
-            this.tableMetadata = await this.dbService.getTableInfo(
+            this.length = await this.dbService.getTableInfo(
                 this.tableName,
             );
         } catch {
@@ -117,7 +121,7 @@ export class EditComponent implements OnInit {
         this.initialDataset = JSON.parse(JSON.stringify(this.dataset));
 
         columns.forEach(column => {
-            if (column['name'] !== 'id') {
+            if (!['tessellation_id', 'tessellation_created_by', 'id'].includes(column['name'])) {
                 // obj[column['name']] = '';
                 this.columnHeaders.push({
                     data: column['name'],
@@ -126,6 +130,7 @@ export class EditComponent implements OnInit {
             }
         });
         this.hot.hotInstance.render();
+        this.paginator._pageIndex = 0;
     }
 
     addEmptyRow() {
@@ -148,8 +153,34 @@ export class EditComponent implements OnInit {
         this.hot.hotInstance.getActiveEditor().enableFullEditMode();
     }
 
+    async pageChange(pageEvent: PageEvent){
+      this.modifiedRows = [];
+      this.spin = true;
+      this.hot.hotInstance.updateSettings({
+        readOnly: true, // make table cells read-only
+        contextMenu: false, // disable context menu to change things
+        disableVisualSelection: true, // prevent user from visually selecting
+        manualColumnResize: false, // prevent dragging to resize columns
+        manualRowResize: false, // prevent dragging to resize rows
+        comments: false, // prevent editing of comments
+      });
+      this.length = await this.dbService.getTableInfo(
+          this.tableName, this.pageSize, pageEvent.pageIndex
+      )
+      this.dataset = this.dbService.getCurrentTableData();
+      this.initialDataset = JSON.parse(JSON.stringify(this.dataset));
+      this.hot.hotInstance.updateSettings({
+        readOnly: false, // make table cells read-only
+        contextMenu: true, // disable context menu to change things
+        disableVisualSelection: false, // prevent user from visually selecting
+        manualColumnResize: true, // prevent dragging to resize columns
+        manualRowResize: true, // prevent dragging to resize rows
+        comments: true, // prevent editing of comments
+      });
+      this.spin = false;
+    }
+  
     selectFiles(event, ele) {
-      
       const files = event.target.files
       const { type } = files[0]
       if(type != 'text/csv'){
@@ -170,6 +201,7 @@ export class EditComponent implements OnInit {
                 this.dataset = JSON.parse(JSON.stringify(this.parsedRec));
                 this.truncateTable = true;
                 this.parsedRec = [];
+                this.hidePaginator = true;
                 this.snackBar.open('File parsing completed', 'Dismiss');
               }else{
                 this.snackBar.open('File does not contain valid data', 'Dismiss');
@@ -187,17 +219,8 @@ export class EditComponent implements OnInit {
         let gg = [];
         data.forEach((item, index) => {
             let emptyRow = this.hot.hotInstance.isEmptyRow(index);
-            let row = [];
             if (!item.id && !emptyRow) {
-                columnHeaders.forEach(columnName => {
-                    if (columnName !== 'id') {
-                        let col = {};
-                        col['columnName'] = columnName;
-                        col['value'] = item[columnName];
-                        row.push(col);
-                    }
-                });
-                gg.push(row);
+                gg.push(item)
             }
         });
 
@@ -231,6 +254,7 @@ export class EditComponent implements OnInit {
                                     duration: 1000,
                                 });
                                 this.modifiedRows = [];
+                                this.hidePaginator = false;
                             });
                         this.ngOnInit();
                         const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();

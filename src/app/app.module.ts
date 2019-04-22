@@ -15,6 +15,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { HotTableModule } from '@handsontable/angular';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 import { InterceptService, AuthService, DBService } from './services/index';
 
@@ -50,6 +51,7 @@ import { AuthGuard, AdminGuard } from './guards/index';
         HttpClientModule,
         MatButtonModule,
         MatSnackBarModule,
+        MatPaginatorModule,
         routes,
         SharedComponentModule,
         AngularFireModule.initializeApp(environment.firebase),

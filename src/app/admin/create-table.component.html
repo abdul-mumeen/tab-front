@@ -90,6 +90,14 @@
                                 >
                                     Float
                                 </span>
+                                <span
+                                    *ngIf="
+                                        column.controls.type.value == 'DATE'
+                                    "
+                                    class="buttonLabel"
+                                >
+                                    Date
+                                </span>
                                 <mat-icon
                                     *ngIf="!showDropdownContent"
                                     style="float:right;"
@@ -132,6 +140,9 @@
                                 >
                                 <a (click)="setDataTypeValue(i, 'VARCHAR')"
                                     >VARCHAR</a
+                                >
+                                <a (click)="setDataTypeValue(i, 'DATE')"
+                                    >Date</a
                                 >
                             </div>
                         </div>
