@@ -33,12 +33,12 @@ export class DBService {
         private afDb: AngularFirestore,
         private auth: AuthService,
     ) {
-      tableau.extensions.initializeAsync().then(async()=>{
-        const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
-        const tableSummaries = await datasources[0].getActiveTablesAsync();
-        const tables = tableSummaries.map(summary => summary.name);
-        this.updateTableauTables(tables);
-      })
+        tableau.extensions.initializeAsync().then(async () => {
+            const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
+            const tableSummaries = await datasources[0].getActiveTablesAsync();
+            const tables = tableSummaries.map(summary => summary.name);
+            this.updateTableauTables(tables);
+        });
     }
 
     get tableauTables() {
@@ -52,14 +52,16 @@ export class DBService {
     getTables() {
         const url: string = this.auth.apiUrl + '/table';
         const headers = this.auth.authHeaders();
-        return this.http.get<any>(url, {headers: headers});
+        console.log(headers, 'headdrs');
+
+        return this.http.get<any>(url, { headers: headers });
     }
 
     async getTabless() {
         // Todo: handle errors
         const headers = this.auth.authHeaders();
         const response = await this.http
-            .get(`${this.apiUrl}/table`, {headers: headers})
+            .get(`${this.apiUrl}/table`, { headers: headers })
             .toPromise();
         this.tables = response['data']['tables'];
         const tableNames = this.tables.map(table => table['name']);
@@ -68,12 +70,20 @@ export class DBService {
         );
     }
 
-    async getTableInfo(tableName: string, perPage:number = 10, page:number = 0) {
+    async getTableInfo(
+        tableName: string,
+        perPage: number = 10,
+        page: number = 0,
+    ) {
         const headers = this.auth.authHeaders();
         // Todo: Handle errors
         try {
-            const url: string = this.auth.apiUrl + `/table/${tableName}?limit=${perPage}&page=${page}`;
-            const response = await this.http.get<any>(url, {headers: headers}).toPromise();
+            const url: string =
+                this.auth.apiUrl +
+                `/table/${tableName}?limit=${perPage}&page=${page}`;
+            const response = await this.http
+                .get<any>(url, { headers: headers })
+                .toPromise();
 
             this.currentTableName = tableName;
             this.currentTableData = response.data['table']['rows'];
@@ -87,27 +97,27 @@ export class DBService {
     createTables(tableData) {
         const headers = this.auth.authHeaders();
         const url: string = this.auth.apiUrl + '/table';
-        return this.http.post(url, tableData, {headers: headers});
+        return this.http.post(url, tableData, { headers: headers });
     }
 
     connectToDatabase(connectionDetails) {
         const headers = this.auth.authHeaders();
         const url: string = this.auth.apiUrl + '/connect';
-        return this.http.post(url, connectionDetails, {headers: headers});
+        return this.http.post(url, connectionDetails, { headers: headers });
     }
 
     addEntries(rowsData) {
         const headers = this.auth.authHeaders();
         const url: string =
             this.auth.apiUrl + `/table/${this.currentTableName}/records`;
-        return this.http.post(url, rowsData, {headers: headers});
+        return this.http.post(url, rowsData, { headers: headers });
     }
 
     updateEntries(rowsData) {
         const headers = this.auth.authHeaders();
         const url: string =
             this.auth.apiUrl + `/table/${this.currentTableName}/records`;
-        return this.http.put(url, rowsData, {headers: headers});
+        return this.http.put(url, rowsData, { headers: headers });
     }
 
     getCurrentTableDef(): Array<{}> {
