@@ -30,9 +30,7 @@ export class AdminComponent implements OnInit {
     ngOnInit() {
         this.db.getTables().subscribe(
             result => {
-                this.tables = result.data.tables.filter(table =>
-                    this.db.tableauTables.includes(table.name),
-                );
+                this.tables = result.data.tables;
             },
             error => {
                 this.snackBar.open('Error getting tables', 'Dismiss');
@@ -49,6 +47,13 @@ export class AdminComponent implements OnInit {
         this.showTableDropdown = !this.showTableDropdown;
         event.stopPropagation();
         if (tableName) {
+            if (!this.db.tableauTables.includes(tableName)) {
+                this.snackBar.open(
+                    'Make the table active on tableau and try again',
+                    'dismiss',
+                );
+                return;
+            }
             this.router.navigate([`tables/${tableName}`]);
         }
     }

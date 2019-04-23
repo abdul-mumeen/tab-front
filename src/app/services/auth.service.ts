@@ -101,7 +101,7 @@ export class AuthService {
         // create authorization header with our jwt token
         if (this.token) {
             let connectionId = this.connectionDetails.id;
-            let isAdmin = this.userDetails.role == 'admin' ? true : false;
+            let isAdmin = this.userDetails.role === 'admin' ? true : false;
             let headers = new HttpHeaders({
                 Authorization: this.token,
                 'connection-id': connectionId,

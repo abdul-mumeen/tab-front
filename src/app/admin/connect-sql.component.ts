@@ -28,7 +28,7 @@ export class ConnectSqlComponent implements OnInit {
         private snackBar: MatSnackBar,
         private router: Router,
     ) {
-        tableau.extensions.initializeAsync();
+        // tableau.extensions.initializeAsync();
         this.tableForm = new FormGroup({
             host: new FormControl('', Validators.required),
             port: new FormControl('', Validators.required),
@@ -59,7 +59,6 @@ export class ConnectSqlComponent implements OnInit {
             try {
                 valuesObject.client = connectionDetails.type.toLowerCase();
                 valuesObject.port = +valuesObject.port;
-                console.log(valuesObject);
 
                 this.db.connectToDatabase(valuesObject).subscribe(
                     result => {
@@ -67,8 +66,6 @@ export class ConnectSqlComponent implements OnInit {
                         this.router.navigate(['table/new']);
                     },
                     err => {
-                        console.log(err, 'error');
-
                         this.snackBar.open(err.error.data.message, 'Dismiss');
                     },
                 );

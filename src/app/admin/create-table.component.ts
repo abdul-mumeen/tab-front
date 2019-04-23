@@ -55,9 +55,7 @@ export class CreateTables implements OnInit {
         event.stopPropagation();
     }
 
-    ngOnInit() {
-        // console.log(this.tableForm.get('columns'), 'sss')
-    }
+    ngOnInit() {}
 
     showInput(input, index) {
         this.displayInput[index] = false;

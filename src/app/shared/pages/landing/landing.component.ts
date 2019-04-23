@@ -20,7 +20,6 @@ export class LandingComponent implements OnInit {
         try {
             const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
             const connectionSummaries = await datasources[0].getConnectionSummariesAsync();
-            console.log(connectionSummaries);
             this.authService.updateConnectionDetails(connectionSummaries[0]);
             const tableSummaries = await datasources[0].getActiveTablesAsync();
             const tables = tableSummaries.map(summary => summary.name);
