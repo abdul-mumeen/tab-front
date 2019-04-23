@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiRoot: 'http://backend:7000/api/v1', // 'http://localhost:7000/api/v1',
+  apiRoot: '/api/v1', // 'http://localhost:7000/api/v1',
   firebase: {
     apiKey: 'AIzaSyBH-IEHB7rnO7ueoWJJgcNs512NiBF6224',
     authDomain: 'tessellation-52605.firebaseapp.com',
