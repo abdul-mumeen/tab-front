@@ -105,7 +105,7 @@ export class AuthService {
             let isAdmin = this.userDetails.role == 'admin'?true:false;
             let headers = new HttpHeaders({
                 Authorization: this.token,
-                connection_id: connectionId,
+                'connection-id': connectionId,
                 admin: isAdmin? 'true': 'false',
                 'Content-Type': 'application/json',
             });
