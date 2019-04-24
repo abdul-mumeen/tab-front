@@ -71,7 +71,9 @@
                                     VARCHAR
                                 </span>
                                 <span
-                                    *ngIf="column.controls.type.value == 'INTEGER'"
+                                    *ngIf="
+                                        column.controls.type.value == 'INTEGER'
+                                    "
                                     class="buttonLabel"
                                 >
                                     Integer
@@ -91,9 +93,7 @@
                                     Float
                                 </span>
                                 <span
-                                    *ngIf="
-                                        column.controls.type.value == 'DATE'
-                                    "
+                                    *ngIf="column.controls.type.value == 'DATE'"
                                     class="buttonLabel"
                                 >
                                     Date
@@ -135,7 +135,7 @@
                                 <a (click)="setDataTypeValue(i, 'TEXT')"
                                     >Text</a
                                 >
-                                <a (click)="setDataTypeValue(i, 'INT')"
+                                <a (click)="setDataTypeValue(i, 'INTEGER')"
                                     >Integer</a
                                 >
                                 <a (click)="setDataTypeValue(i, 'VARCHAR')"

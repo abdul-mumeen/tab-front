@@ -10,17 +10,16 @@ declare var tableau: any;
 })
 export class LandingComponent implements OnInit {
     constructor(
-      private authService: AuthService,
-      private dbService: DBService,
-      private snackBar: MatSnackBar
-    ) {
-        tableau.extensions.initializeAsync();
-    }
+        private authService: AuthService,
+        private dbService: DBService,
+        private snackBar: MatSnackBar,
+    ) {}
+
     async ngOnInit() {
+        await tableau.extensions.initializeAsync();
         try {
             const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
             const connectionSummaries = await datasources[0].getConnectionSummariesAsync();
-            console.log(connectionSummaries);
             this.authService.updateConnectionDetails(connectionSummaries[0]);
             const tableSummaries = await datasources[0].getActiveTablesAsync();
             const tables = tableSummaries.map(summary => summary.name);

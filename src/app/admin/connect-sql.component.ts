@@ -26,9 +26,9 @@ export class ConnectSqlComponent implements OnInit {
         private authService: AuthService,
         private db: DBService,
         private snackBar: MatSnackBar,
-        private router: Router
+        private router: Router,
     ) {
-        tableau.extensions.initializeAsync();
+        // tableau.extensions.initializeAsync();
         this.tableForm = new FormGroup({
             host: new FormControl('', Validators.required),
             port: new FormControl('', Validators.required),
@@ -58,21 +58,16 @@ export class ConnectSqlComponent implements OnInit {
 
             try {
                 valuesObject.client = connectionDetails.type.toLowerCase();
-                valuesObject.port = +valuesObject.port
+                valuesObject.port = +valuesObject.port;
+
                 this.db.connectToDatabase(valuesObject).subscribe(
-                  result=> {
-                    this.snackBar.open(
-                        'Success',
-                        'Dismiss',
-                    );
-                    this.router.navigate(['table/new']);
-                  },
-                  err=> {
-                    this.snackBar.open(
-                        err.error.data.message,
-                        'Dismiss',
-                    );
-                  }
+                    result => {
+                        this.snackBar.open('Success', 'Dismiss');
+                        this.router.navigate(['table/new']);
+                    },
+                    err => {
+                        this.snackBar.open(err.error.data.message, 'Dismiss');
+                    },
                 );
             } catch {}
             this.loading = false;

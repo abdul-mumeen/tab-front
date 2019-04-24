@@ -33,11 +33,10 @@ export class AuthService {
         private afAuth: AngularFireAuth,
         private afDb: AngularFirestore,
     ) {
-
-        tableau.extensions.initializeAsync().then(async()=>{
-          const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
-          const connectionSummaries = await datasources[0].getConnectionSummariesAsync();
-          this.updateConnectionDetails(connectionSummaries[0]);
+        tableau.extensions.initializeAsync().then(async () => {
+            const datasources = await tableau.extensions.dashboardContent.dashboard.worksheets[0].getDataSourcesAsync();
+            const connectionSummaries = await datasources[0].getConnectionSummariesAsync();
+            this.updateConnectionDetails(connectionSummaries[0]);
         });
 
         this.token = this.getToken();
@@ -102,11 +101,11 @@ export class AuthService {
         // create authorization header with our jwt token
         if (this.token) {
             let connectionId = this.connectionDetails.id;
-            let isAdmin = this.userDetails.role == 'admin'?true:false;
+            let isAdmin = this.userDetails.role === 'admin' ? true : false;
             let headers = new HttpHeaders({
                 Authorization: this.token,
                 'connection-id': connectionId,
-                admin: isAdmin? 'true': 'false',
+                admin: isAdmin ? 'true' : 'false',
                 'Content-Type': 'application/json',
             });
             return headers;
@@ -144,10 +143,10 @@ export class AuthService {
                 .auth()
                 .signInWithEmailAndPassword(email, password);
             this.getAPItoken(userCred.user.uid).subscribe(
-              (tokenResponse: any) => {
-                this.storeToken(tokenResponse.data.token);
-                return null;
-              }
+                (tokenResponse: any) => {
+                    this.storeToken(tokenResponse.data.token);
+                    return null;
+                },
             );
             const userDocRef = await this.getDoc(`users/${userCred.user.uid}`);
             const userDoc = userDocRef.data();
@@ -171,9 +170,11 @@ export class AuthService {
     }
 
     private getAPItoken(uuid: string) {
-      let headers = this.contentHeader();
-      let data = { uuid: uuid };
-      return this.http.post(this.apiUrl + '/auth/authenticate', data, {headers: headers})
+        let headers = this.contentHeader();
+        let data = { uuid: uuid };
+        return this.http.post(this.apiUrl + '/auth/authenticate', data, {
+            headers: headers,
+        });
     }
 
     private storeToken(newToken: string) {
