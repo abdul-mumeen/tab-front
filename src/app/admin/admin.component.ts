@@ -47,13 +47,13 @@ export class AdminComponent implements OnInit {
         this.showTableDropdown = !this.showTableDropdown;
         event.stopPropagation();
         if (tableName) {
-            if (!this.db.tableauTables.includes(tableName)) {
-                this.snackBar.open(
-                    'Make the table active on tableau and try again',
-                    'dismiss',
-                );
-                return;
-            }
+            // if (!this.db.tableauTables.includes(tableName)) {
+            //     this.snackBar.open(
+            //         'Make the table active on tableau and try again',
+            //         'dismiss',
+            //     );
+            //     return;
+            // }
             this.router.navigate([`tables/${tableName}`]);
         }
     }
