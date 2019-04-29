@@ -7,7 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import { MatSnackBar } from '@angular/material';
 import { PageEvent } from '@angular/material';
 import * as Papa from 'papaparse';
-
+import * as moment from 'moment'
 import Handsontable from 'handsontable';
 declare var tableau: any;
 
@@ -67,13 +67,19 @@ export class EditComponent implements OnInit {
                 }
             }
         },
-        cells: (row, col) => {
+        cells: function (row, col, this) {
+        cells: function (this, row, col) {
             let cellProperties = {};
             if (row % 2 === 0) {
-                cellProperties['renderer'] = this.rowRendererOne;
-            } else {
-                cellProperties['renderer'] = this.rowRendererTwo;
+                cellProperties['renderer'] = rowRendererOne;
+            }else {
+                cellProperties['renderer'] = rowRendererTwo;
             }
+            
+            if(this.type === "date") {
+                cellProperties['renderer'] = yellowRenderer;
+            }
+
             return cellProperties;
         },
     };
@@ -126,6 +132,10 @@ export class EditComponent implements OnInit {
                 this.columnHeaders.push({
                     data: column['name'],
                     title: `<div class='column-header'>${column['name']}`,
+                    ...(column['dataType'] == "date" ? {
+                      type: 'date', dateFormat: 'YYYY-MM-DD',
+                      correctFormat: true
+                    } : {})
                 });
             }
         });
@@ -277,16 +287,28 @@ export class EditComponent implements OnInit {
     back() {
         this.loc.back();
     }
-
-    rowRendererOne(instance, td, row, col, prop, value, cellProperties) {
-        Handsontable.renderers.TextRenderer.apply(this, arguments);
-        td.style.color = '#8F8F8F';
-        td.style.background = 'white';
-    }
-
-    rowRendererTwo(instance, td, row, col, prop, value, cellProperties) {
-        Handsontable.renderers.TextRenderer.apply(this, arguments);
-        td.style.color = '#8F8F8F';
-        td.style.background = '#DCDCDC';
-    }
 }
+
+function rowRendererOne(instance, td, row, col, prop, value, cellProperties) {
+    Handsontable.renderers.TextRenderer.apply(this, arguments);
+    td.style.color = '#8F8F8F';
+    td.style.background = 'white';
+}
+
+function rowRendererTwo(instance, td, row, col, prop, value, cellProperties) {
+    Handsontable.renderers.TextRenderer.apply(this, arguments);
+    td.style.color = '#8F8F8F';
+    td.style.background = '#DCDCDC';
+}
+
+function yellowRenderer (instance, td, row, col, prop, value, cellProperties) {
+  Handsontable.renderers.DateRenderer.apply(this, arguments);
+  td.innerText = moment(value, 'YYYY-MM-DD').format('YYYY-MM-DD')
+  if (row % 2 === 0) {
+    td.style.color = '#8F8F8F';
+    td.style.background = 'white';
+  }else {
+    td.style.color = '#8F8F8F';
+    td.style.background = '#DCDCDC';
+  }
+};
