@@ -67,7 +67,6 @@ export class EditComponent implements OnInit {
                 }
             }
         },
-        cells: function (row, col, this) {
         cells: function (this, row, col) {
             let cellProperties = {};
             if (row % 2 === 0) {
