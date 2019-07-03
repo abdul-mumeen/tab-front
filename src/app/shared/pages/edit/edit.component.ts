@@ -192,7 +192,7 @@ export class EditComponent implements OnInit {
     selectFiles(event, ele) {
       const files = event.target.files
       const { type } = files[0]
-      if(['text/csv', 'application/vnd.ms-excel'].includes(type)){
+      if(!['text/csv', 'application/vnd.ms-excel'].includes(type)){
         console.log(type)
         ele.value = null;
         this.snackBar.open('Invalid file type', 'Dismiss');
