@@ -9,6 +9,7 @@ import { PageEvent } from '@angular/material';
 import * as Papa from 'papaparse';
 import * as moment from 'moment'
 import Handsontable from 'handsontable';
+import * as XLSX from 'xlsx';
 declare var tableau: any;
 
 @Component({
@@ -192,35 +193,51 @@ export class EditComponent implements OnInit {
     selectFiles(event, ele) {
       const files = event.target.files
       const { type } = files[0]
-      if(!['text/csv', 'application/vnd.ms-excel'].includes(type)){
+      if(['text/csv', 'application/vnd.ms-excel'].includes(type)){
+        this.convertToJson(files[0]);
+      }else if(['', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'].includes(type)){
+        let reader = new FileReader();
+        reader.onload = function(e: any) {
+          const data = new Uint8Array(e.target.result);
+          const workBook = XLSX.read(data, {type: 'array'});
+          const csvString: string = XLSX.utils.sheet_to_csv(workBook.Sheets[workBook.SheetNames[0]]);
+          this.convertToJson(csvString);
+        }.bind(this);
+        reader.readAsArrayBuffer(files[0]);
+      }else{
         console.log(type)
         ele.value = null;
         this.snackBar.open('Invalid file type', 'Dismiss');
-      }else{
-        Papa.parse(files[0],
-          {
-            delimiter: ',',
-            header: true,
-            step: (results, parser)=> {
-              if(!results.errors.length && Object.keys(results.data[0]).every(item=> this.columnList.includes(item))){
-                this.parsedRec.push(results.data[0])
-              }
-            },
-            complete: (results, file)=> {
-              if(this.parsedRec.length){
-                this.dataset = JSON.parse(JSON.stringify(this.parsedRec));
-                this.truncateTable = true;
-                this.parsedRec = [];
-                this.hidePaginator = true;
-                this.snackBar.open('File parsing completed', 'Dismiss');
-              }else{
-                this.snackBar.open('File does not contain valid data', 'Dismiss');
-              }
-            }
-          }
-        )
       }
   }
+
+    convertToJson(file){
+      console.log(file);
+      Papa.parse(file,
+        {
+          delimiter: ',',
+          header: true,
+          step: (results, parser)=> {
+            console.log(results)
+            if(!results.errors.length && Object.keys(results.data[0]).every(item=> this.columnList.includes(item))){
+              this.parsedRec.push(results.data[0])
+            }
+          },
+          complete: (results, file)=> {
+            console.log(results)
+            if(this.parsedRec.length){
+              this.dataset = JSON.parse(JSON.stringify(this.parsedRec));
+              this.truncateTable = true;
+              this.parsedRec = [];
+              this.hidePaginator = true;
+              this.snackBar.open('File parsing completed', 'Dismiss');
+            }else{
+              this.snackBar.open('File does not contain valid data', 'Dismiss');
+            }
+          }
+        }
+      )
+    }
 
     submit() {
       this.loading = true;
